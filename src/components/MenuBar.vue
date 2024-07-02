@@ -15,10 +15,7 @@
 					class="search-text-input"
 				/>
 				<span class="search-icon">
-					<iconify-icon
-						icon="fa-solid:search"
-						
-					/>
+					<iconify-icon icon="fa-solid:search" />
 				</span>
 			</div>
 			<div style="display: flex">
@@ -66,8 +63,6 @@ export default {
 </script>
 
 <style scoped>
-
-
 .container {
 	width: 100%;
 }
@@ -124,11 +119,10 @@ export default {
 	left: 85%;
 	top: 50%;
 	transform: translateY(-50%);
-  	color: #ffd200;
-						
-						
-							font-size: 25px;
-							cursor: pointer;
+	color: #ffd200;
+
+	font-size: 25px;
+	cursor: pointer;
 }
 
 .icon-log {
