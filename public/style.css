@@ -6,11 +6,32 @@
 }
 
 :root {
-	--fonte-principal: "Jolly Lodger";
-	--fonte-secundaria: "Rubik";
-	--color-principal: #fe772d;
-	--color-texto-secudario: #f5f5f5;
-	--colo-texto-botao: #292d32;
+	--font_family: "Source Sans Pro", sans-serif;
+	--color_font_medium: #ffffff;
+	--color_font_dark: #ebebeb;
+	--color_font_light: #bdbdbd;
+	--color_font_inverted: #000000;
+	--color_primary: #ffd200;
+	--color_primary_medium: #ffd200;
+	--color_primary_light: #11610d;
+	--color_secondary_medium: #ffd200;
+	--color_gray_medium: #292929;
+	--color_gray_dark: #424242;
+	--color_dark: #141414;
+	--color_header_bg: #141414;
+	--color_header_main_font: #ffffff;
+	--color_header_second_font: #bdbdbd;
+	--color_header_highlight: #ffd200;
+	--color_header_cart_count: #ffd200;
+	--color_header_details: #292929;
+	--color_footer_bg: #0d0d0d;
+	--color_footer_main_font: #d1d1d1;
+	--color_footer_second_font: #bdbdbd;
+	--color_footer_highlight: #ffd200;
+	--color_footer_button: #ffd200;
+	--color_footer_details: #292929;
+	--color_seal: #ffd200;
+	--color_bg_seal: #292929;
 }
 
 body {

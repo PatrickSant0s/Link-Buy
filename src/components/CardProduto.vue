@@ -1,5 +1,5 @@
 <template>
- <div class="title d-flex justify-center">
+ <div class="title d-flex justify-center" >
 		<v-row class="mt-10">
 			<v-col
 				v-for="(produto, index) in produtos"
@@ -66,7 +66,6 @@ export default {
   display: flex;
   text-align: center;
 
-  left: ;
 }
 
 .parcela {
