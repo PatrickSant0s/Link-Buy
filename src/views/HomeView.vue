@@ -1,14 +1,17 @@
 <template>
   <div style="background-color: #141414; width: 100%">
     <MenuBar />
+     <h1 class="title">Eventos</h1>
+    <CarrouselEventos/>
     <div class="d-flex justify-center">
       <!-- Filtro lateral -->
-      <div class="filter-sidebar">
+      <!-- <div class="filter-sidebar">
         <FilterProduct />
-      </div>
+      </div> -->
 
       <!-- Conteúdo principal -->
       <div class="content">
+        <h1 class="title">Lançamentos</h1>
         <CardProduto />
       </div>
     </div>
@@ -19,6 +22,7 @@
 import MenuBar from "@/components/MenuBar.vue";
 import CardProduto from "@/components/CardProduto.vue";
 import FilterProduct from "@/components/FilterProduct.vue";
+import CarrouselEventos from "@/components/CarrouselEventos.vue";
 
 export default {
   name: "HomeView",
@@ -26,11 +30,17 @@ export default {
     MenuBar,
     CardProduto,
     FilterProduct,
+    CarrouselEventos
   },
 };
 </script>
 
 <style scoped>
+.title{
+  color: #ffd200;
+  text-align: center;
+  margin-top: 10px;
+}
 .content {
   flex: 1; /* O conteúdo principal flexiona para preencher o espaço restante */
   max-width: 1100px; /* Largura máxima padrão do conteúdo principal */
