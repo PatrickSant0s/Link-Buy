@@ -32,7 +32,5 @@
 </script>
 
 <style scoped>
-v-carrousel-item{
-    
-}
+
 </style>

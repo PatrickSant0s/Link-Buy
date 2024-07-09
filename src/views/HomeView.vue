@@ -1,8 +1,8 @@
 <template>
   <div style="background-color: #141414; width: 100%">
     <MenuBar />
-     <h1 class="title">Eventos</h1>
-    <CarrouselEventos/>
+     <!-- <h1 class="title">Lançamentos</h1>
+    <CarrouselEventos/> -->
     <div class="d-flex justify-center">
       <!-- Filtro lateral -->
       <!-- <div class="filter-sidebar">
@@ -39,7 +39,6 @@ export default {
 .title{
   color: #ffd200;
   text-align: center;
-  margin-top: 10px;
 }
 .content {
   flex: 1; /* O conteúdo principal flexiona para preencher o espaço restante */
