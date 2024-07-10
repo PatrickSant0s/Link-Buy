@@ -1,18 +1,18 @@
 <template>
- <div class="title d-flex justify-center" >
+	<div class="title d-flex justify-center" >
 		<v-row class="mt-10">
 			<v-col
 				v-for="(produto, index) in produtos"
 				:key="produto.id"
 				cols="12"
 				md="4"
-        
 			>
 				<v-card
 					class="mx-auto mb-3"
 					max-width="400"
 					height="auto"
 					color="#0d0d0d"
+					style=""
 				>
 					<v-img height="auto" :src="produto.imagem"></v-img>
 
@@ -34,7 +34,6 @@
 			</v-col>
 		</v-row>
 	</div>
-
 </template>
 
 <script>
@@ -63,9 +62,8 @@ export default {
 }
 
 .title {
-  display: flex;
-  text-align: center;
-
+	display: flex;
+	text-align: center;
 }
 
 .parcela {
