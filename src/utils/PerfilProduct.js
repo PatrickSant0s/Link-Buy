@@ -1,4 +1,4 @@
-export const produtos = [
+export const products = [
 	{
 		id: 1,
 		nome: "Calção Athleta SS24 Futevôlei - Preto/Cinza",
@@ -53,5 +53,4 @@ export const produtos = [
 		portions:
 			"ou 3x de R$41,17 Sem juros MasterCard - Parceiro ou 12x de R$11,67 com juros Cartão Visa",
 	},
-	// Adicione mais produtos conforme necessário
 ];

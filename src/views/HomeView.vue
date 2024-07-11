@@ -1,11 +1,9 @@
 <template>
 	<div style="background-color: #141414; width: 100%">
 		<MenuBar />
-	
+
 		<div class="d-flex justify-center">
 			<!-- Filtro lateral -->
-		
-     
 
 			<!-- Conteúdo principal -->
 			<div class="content">
@@ -13,8 +11,8 @@
 				<CardProduto />
 			</div>
 		</div>
-			<h1 class="title">Eventos</h1>
-    <CarrouselEventos/> 
+		<h1 class="title">Eventos</h1>
+		<CarrouselEventos />
 		<div>
 			<RodaPe />
 		</div>

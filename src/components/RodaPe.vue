@@ -61,10 +61,14 @@
 							<a href="/pagamento" title="Pagamento">Pagamento</a>
 						</li>
 						<li>
-							<a href="/tempo-de-garantia" title="Tempo de Garantia">Tempo de Garantia</a>
+							<a href="/tempo-de-garantia" title="Tempo de Garantia"
+								>Tempo de Garantia</a
+							>
 						</li>
 						<li>
-							<a href="/politica-de-troca" title="Politica de Troca">Politica de Troca</a>
+							<a href="/politica-de-troca" title="Politica de Troca"
+								>Politica de Troca</a
+							>
 						</li>
 						<li>
 							<a href="/contato" title="Fale Conosco">Fale Conosco</a>
@@ -90,7 +94,10 @@
 							</a>
 						</li>
 						<li>
-							<a href="mailto:contato@athletabrasil.com" title="Email: contato@athletabrasil.com">
+							<a
+								href="mailto:contato@athletabrasil.com"
+								title="Email: contato@athletabrasil.com"
+							>
 								<i class="icon icon-email v-align-middle"></i>
 								contato@gmail.com
 							</a>
@@ -187,7 +194,6 @@
 	</div>
 </template>
 
-
 <style scoped>
 .container {
 	width: 100%;
@@ -195,59 +201,53 @@
 	margin-top: 50px;
 }
 
-
 .title {
-  text-transform: uppercase;
-    color: var(--color_footer_main_font);
-    font-size: .87rem;
-    font-weight: 700;
-    margin-bottom: 8px;
-
+	text-transform: uppercase;
+	color: var(--color_footer_main_font);
+	font-size: 0.87rem;
+	font-weight: 700;
+	margin-bottom: 8px;
 }
 
-.list{
-	    font-size: .87rem;
-    font-weight: 400;
-    display: block;
-    line-height: 1.5;
-    padding: 5px 0;
-    transition: ease-out 0.2s;
+.list {
+	font-size: 0.87rem;
+	font-weight: 400;
+	display: block;
+	line-height: 1.5;
+	padding: 5px 0;
+	transition: ease-out 0.2s;
 
-     color: var(--color_footer_second_font);
+	color: var(--color_footer_second_font);
 }
 
 a {
-    background-color: transparent;
-    text-decoration: none;
-    color: var(--color_footer_second_font);
+	background-color: transparent;
+	text-decoration: none;
+	color: var(--color_footer_second_font);
 }
-
 
 .box {
-   
- border-top: 0.1px solid #ccc; /* Borda mais fina */
-   
+	border: 1px solid rgb(77, 77, 77);
 }
 .title {
-    font-size: 1.5em;
-    margin-bottom: 10px;
+	font-size: 1.5em;
+	margin-bottom: 10px;
 }
 .payment-list {
-    display: flex;
-    flex-wrap: wrap;
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    gap: 10px;
+	display: flex;
+	flex-wrap: wrap;
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	gap: 10px;
 }
 .payment-form {
-    flex: 1 1 calc(20% - 0px); 
-    max-width: calc(20% - 20px);
-    display: flex;
-  
+	flex: 1 1 calc(20% - 0px);
+	max-width: calc(20% - 20px);
+	display: flex;
 }
 .payment-form img {
-    max-width: 100%;
-    height: auto;
+	max-width: 100%;
+	height: auto;
 }
 </style>

@@ -1,5 +1,5 @@
 <template>
-	<div class="title d-flex justify-center" >
+	<div class="title d-flex justify-center">
 		<v-row class="mt-10">
 			<v-col
 				v-for="(produto, index) in produtos"
@@ -21,8 +21,8 @@
 						<span class="sub-title">{{ produto.preco }}</span>
 					</div>
 
-					<div class="parcela">
-						{{ produto.parcelas }}
+					<div class="portion">
+						{{ produto.portions }}
 					</div>
 
 					<div class="pa-5">
@@ -66,7 +66,7 @@ export default {
 	text-align: center;
 }
 
-.parcela {
+.portion {
 	font-size: 0.87rem;
 	font-weight: 500;
 	display: block;
