@@ -105,7 +105,7 @@ export default {
 
 .search-text-input {
 	flex: 1;
-	width: 380px;
+	width: 450px;
 	height: 60px;
 	border-radius: 10px;
 	font-size: 14px;
@@ -116,7 +116,7 @@ export default {
 
 .search-icon {
 	position: absolute;
-	left: 85%;
+	left: 90%;
 	top: 50%;
 	transform: translateY(-50%);
 	color: #ffd200;
@@ -128,7 +128,7 @@ export default {
 .icon-log {
 	position: absolute;
 	top: 90px;
-	right: 19%;
+	right: 16%;
 	color: #ffd200;
 }
 </style>
