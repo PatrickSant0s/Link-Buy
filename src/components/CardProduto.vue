@@ -30,6 +30,7 @@
 							Ver produto
 						</button>
 					</div>
+					
 				</v-card>
 			</v-col>
 		</v-row>
@@ -38,7 +39,7 @@
 
 <script>
 import { produtos } from "@/utils/CardContext";
-
+import { Icon } from '@iconify/vue';
 export default {
 	data() {
 		return {

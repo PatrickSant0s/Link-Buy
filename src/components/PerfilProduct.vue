@@ -1,11 +1,11 @@
 <template>
   <div class="container d-flex">
     <!-- Card com a imagem do produto -->
-    <v-card class="mx-auto" max-width="550">
+    <v-card class="mx-auto card-image">
       <div v-if="product">
         <img class="imagem" :src="product.imagem" :alt="product.nome" />
         <div class="conteudo">
-          <!-- Aqui você pode adicionar mais detalhes do produto se necessário -->
+          
         </div>
       </div>
     </v-card>
@@ -62,6 +62,12 @@
                   Comprar
                 </button>
               </div>
+			  <div>
+      <span class="info justify">
+ <iconify-icon icon="material-symbols:10k-outline-sharp" width="1.2em" height="1.2em"></iconify-icon>
+        Frete e prazo de entrega
+      </span>
+    </div>
             </div>
           </v-col>
         </v-row>
@@ -120,6 +126,9 @@ export default {
 </script>
 
 <style scoped>
+.card-image {
+ max-height: 450px
+}
 .container {
   gap: 100px;
   margin: 100px;
