@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "../views/HomeView.vue";
-import PerfilProduct from '@/components/PerfilProduct.vue';
+import PerfilProduct from "@/components/PerfilProduct.vue";
 
 const routes = [
 	{
@@ -17,11 +17,11 @@ const routes = [
 		component: () =>
 			import(/* webpackChunkName: "about" */ "../views/AboutView.vue"),
 	},
-	  {
-    path: '/Produto/:id',
-    name: 'PerfilProduct',
-    component: PerfilProduct,
-  },
+	{
+		path: "/Produto/:id",
+		name: "PerfilProduct",
+		component: PerfilProduct,
+	},
 ];
 
 const router = createRouter({

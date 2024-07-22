@@ -5,8 +5,9 @@
 				src="https://mir-s3-cdn-cf.behance.net/projects/404/db2257135246647.Y3JvcCwxMjc5LDEwMDAsMCwxMzk.png"
 				alt="Emblema de FutVôlei"
 				width="220px"
-				  @click="goToHome"
-          style="cursor: pointer;"
+				@click="goToHome"
+				style="cursor: pointer"
+				class="emblem"
 			/>
 			<div class="search-input">
 				<input
@@ -30,7 +31,7 @@
 				</div>
 				<nav class="account-nav">
 					<div class="account-header">
-						<span class="conta">Minha conta</span>
+						<span class="account">Minha conta</span>
 					</div>
 					<div class="account-links link">
 						<a href="" class="link">Entrar</a>
@@ -61,8 +62,8 @@ export default {
 			console.log("Pesquisando por:", this.searchQuery);
 		},
 		goToHome() {
-      this.$router.push('/');
-    }
+			this.$router.push("/");
+		},
 	},
 };
 </script>
@@ -80,7 +81,7 @@ export default {
 	width: 100vw;
 	box-sizing: border-box;
 }
-.conta {
+.account {
 	color: #d1d1d1;
 	font-size: 0.875em;
 	font-weight: 500;
@@ -137,48 +138,48 @@ export default {
 }
 
 @media (max-width: 1020px) {
-  .search-input {
-	width: 30%;
-  }
-  .icon-log {	
-	right: 19%;
+	.search-input {
+		width: 30%;
+	}
+	.icon-log {
+		right: 19%;
+	}
+	.search-text-input {
+		padding-left: 15px;
+	}
+	.search-icon {
+		left: 80%;
+	}
 }
-.search-text-input {
-	padding-left: 15px;
-}
-.search-icon{
-	left: 80%;
-}
-
-}
-
 
 @media (max-width: 920px) {
- .search-input{
-	display: none;
- }
- .icon-log {	
-	right: 31%;
-}
+	.search-input {
+		display: none;
+	}
+	.icon-log {
+		right: 31%;
+	}
 }
 
 @media (max-width: 520px) {
- .search-input{
-	display: none;
- }
- .icon-log {	
-	right: 35%;
-}
-
+	.search-input {
+		display: none;
+	}
+	.icon-log {
+		right: 35%;
+	}
 }
 
 @media (max-width: 375px) {
- .search-input{
-	display: none;
- }
- .icon-log {	
-	right: 35%;
-}
-
+	.search-input {
+		display: none;
+	}
+	.icon-log {
+		right: 41%;
+		top: 65px;
+	}
+	.emblem{
+		width: 150px;
+	}
 }
 </style>

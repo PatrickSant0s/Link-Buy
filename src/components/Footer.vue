@@ -126,8 +126,6 @@
 							data-ll-status="loaded"
 						/>
 					</li>
-	
-	
 				</ul>
 			</div>
 		</div>
@@ -193,28 +191,24 @@ a {
 }
 
 @media (max-width: 780px) {
-   .container  {
-	gap: 14px;
-   }
+	.container {
+		gap: 14px;
+	}
 
-   .title{
-	font-size: 20px;
-   }
-   .icon{
-	width: 140px;
-	height: 100px;
-   }
+	.title {
+		font-size: 20px;
+	}
+	.icon {
+		width: 140px;
+		height: 100px;
+	}
 }
 
-
-
 @media (max-width: 520px) {
-   .container  {
-	flex-direction: column;
-	margin: auto;
-	align-items: center;
-   }
-
-   
+	.container {
+		flex-direction: column;
+		margin: auto;
+		align-items: center;
+	}
 }
 </style>

@@ -1,5 +1,5 @@
 <template>
-	<v-carousel :show-arrows="false">
+	<v-carousel :show-arrows="false" class="carrousel">
 		<v-carousel-item
 			v-for="(item, i) in items"
 			:key="i"
@@ -31,4 +31,11 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style>
+@media (max-width: 720px) {
+	.v-img__img--cover {
+		-o-object-fit: cover;
+		object-fit: contain;
+	}
+}
+</style>
