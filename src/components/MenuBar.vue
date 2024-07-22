@@ -178,7 +178,7 @@ export default {
 		right: 41%;
 		top: 65px;
 	}
-	.emblem{
+	.emblem {
 		width: 150px;
 	}
 }

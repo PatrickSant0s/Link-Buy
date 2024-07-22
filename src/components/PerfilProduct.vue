@@ -1,16 +1,15 @@
 <template>
 	<div><MenuBar /></div>
-	<div class="container d-flex mx-auto">
+	<div class="container mt-16">
 		<!-- Card com a imagem do produto -->
-		<v-card class="mx-auto card-image">
+		<v-card class="">
 			<div v-if="product">
 				<img class="imagem" :src="product.imagem" :alt="product.nome" />
-				<div class="conteudo"></div>
 			</div>
 		</v-card>
 
 		<!-- Card de informações do produto selecionado -->
-		<v-card width="550px" heigth="auto">
+		<v-card width="50%" heigth="auto">
 			<div class="title d-flex justify-center">
 				<v-row class="mt-10">
 					<v-col v-if="product" cols="12">
@@ -21,7 +20,7 @@
 							color="#0d0d0d"
 						>
 							<div class="d-flex flex-column">
-								<span class="name mx-auto pt-4">{{ product.nome }}</span>
+								<span class="name mx-auto ">{{ product.nome }}</span>
 								<div class="rating-container">
 									<star-rating
 										v-bind:increment="0.5"
@@ -41,17 +40,21 @@
 							<!-- Exibição dos tamanhos disponíveis -->
 							<div class="tamanhos-disponiveis">
 								<h3>Tamanhos Disponíveis:</h3>
-								<ul class="d-flex justify-center">
-									<li
-										v-for="tamanho in tamanhosPadrao"
-										:key="tamanho"
-										class="shirt"
-									>
-										{{ tamanho }}
-									</li>
-								</ul>
+								<v-select
+								style="width: 50%; margin: auto"
+									label="Select"
+									:items="[
+										'PP',
+										'P',
+										'M',
+										'G',
+										'GG',
+										'XG',
+									]"
+									variant="solo-inverted"
+								></v-select>
 							</div>
-							<span class="price mt-10">{{ product.preco }}</span>
+							<span class="price mt-5">{{ product.preco }}</span>
 							<div class="portion">
 								{{ product.portions }}
 							</div>
@@ -64,7 +67,7 @@
 									class="cep ml-10"
 								></v-text-field>
 								<v-btn @click="calcularFrete" class="mt-3 button-delivery">
-									Calcular Frete
+									<span class="button-delivery">Calcular Frete</span>
 								</v-btn>
 							</div>
 							<!-- Mostrar resultado do frete -->
@@ -79,15 +82,14 @@
 									Comprar
 								</button>
 							</div>
-							<div>
-								<span class="info justify">
-									<iconify-icon
-										icon="material-symbols:10k-outline-sharp"
-										width="1.2em"
-										height="1.2em"
-									></iconify-icon>
-									Frete e prazo de entrega
-								</span>
+							<div class="delivery">
+								<Icon
+									icon="carbon:delivery"
+									width="1.2em"
+									height="1.2em"
+									style="color: white"
+								></Icon>
+								<span> Frete e prazo de entrega </span>
 							</div>
 						</div>
 					</v-col>
@@ -102,10 +104,11 @@ import { products } from "@/utils/PerfilProduct";
 import { produtos } from "@/utils/CardContext";
 import StarRating from "vue-star-rating";
 import MenuBar from "./MenuBar.vue";
+import { Icon } from "@iconify/vue";
 
 export default {
 	name: "PerfilProduct",
-	components: { StarRating, MenuBar },
+	components: { StarRating, MenuBar, Icon },
 	data() {
 		return {
 			produtos: produtos,
@@ -117,8 +120,8 @@ export default {
 				avaliacoes: [],
 				descricao: "",
 				validator: (value) => value >= 0 && value <= 5,
+				favorites: [],
 			},
-			tamanhosPadrao: ["PP", "P", "M", "G", "GG", "1"], // Lista fixa de tamanhos disponíveis
 			cep: "", // Estado para armazenar o CEP digitado
 			freteCalculado: null, // Estado para armazenar o valor calculado do frete
 		};
@@ -157,10 +160,10 @@ export default {
 </script>
 
 <style>
-.card-image {
-	max-height: 450px;
+.container {
+	display: flex;
+	justify-content: center;
 }
-
 .name {
 	font-size: 1.5rem;
 	font-weight: 600;
@@ -222,6 +225,13 @@ h3 {
 	color: #ffd200;
 	left: 60%;
 }
+.delivery {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 10px;
+	color: var(--color_font_dark);
+}
 .cep {
 	width: 50%;
 	height: 0px;
@@ -247,6 +257,10 @@ h3 {
 	color: #000000;
 	background-color: #ffd200;
 	transition: ease-out 0.2s;
+}
+
+.icon-log {
+	color: #ffd200;
 }
 .v-card--variant-elevated,
 .v-card--variant-flat {
