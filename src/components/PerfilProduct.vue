@@ -1,5 +1,6 @@
 <template>
-  <div class="container d-flex">
+  <div><MenuBar/></div>
+  <div class="container d-flex mx-auto">
     <!-- Card com a imagem do produto -->
     <v-card class="mx-auto card-image">
       <div v-if="product">
@@ -80,10 +81,11 @@
 import { products } from "@/utils/PerfilProduct";
 import { produtos } from "@/utils/CardContext";
 import StarRating from "vue-star-rating";
+import MenuBar from "./MenuBar.vue";
 
 export default {
   name: "PerfilProduct",
-  components: { StarRating },
+  components: { StarRating,  MenuBar },
   data() {
     return {
       produtos: produtos,
@@ -121,18 +123,22 @@ export default {
       console.log(`Produto avaliado com ${rating} estrelas!`);
       // Aqui você pode implementar a lógica para enviar a avaliação para o servidor, por exemplo
     },
+     buscarProduto() {
+      const id = this.$route.params.id;
+      this.product = this.produtos.find((produto) => produto.id === parseInt(id));
+    },
+    verProduto(produto) {
+      this.product = produto; // Atualiza o produto selecionado
+    },
   },
 };
 </script>
 
-<style scoped>
+<style>
 .card-image {
  max-height: 450px
 }
-.container {
-  gap: 100px;
-  margin: 100px;
-}
+
 .name {
   font-size: 1.5rem;
   font-weight: 600;
@@ -237,5 +243,10 @@ h3 {
 }
 .tamanhos-disponiveis ul li {
   margin-bottom: 5px;
+}
+
+.v-main {
+
+      background-color: #141414;
 }
 </style>

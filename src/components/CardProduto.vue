@@ -26,7 +26,7 @@
 					</div>
 
 					<div class="pa-5">
-						<button class="custom-button" @click="verProduto(produto)">
+						  <button class="custom-button" @click="irParaPerfil(produto.id)">
 							Ver produto
 						</button>
 					</div>
@@ -46,13 +46,13 @@ export default {
 			produtos: produtos,
 		};
 	},
-	methods: {
-		verProduto(produto) {
-			console.log("Ver produto:", produto);
-			// Implemente a lógica para ver o produto
-			// Exemplo simples: redirecionar para página de detalhes do produto
-			// this.$router.push(`/produto/${produto.id}`);
-		},
+	  methods: {
+    irParaPerfil(id) {
+      const routeName = this.$route.name;
+      if (routeName !== "PerfilProduct" || this.$route.params.id !== id) {
+        this.$router.push(`/Produto/${id}`);
+      }
+    },
 	},
 };
 </script>

@@ -5,6 +5,8 @@
 				src="https://mir-s3-cdn-cf.behance.net/projects/404/db2257135246647.Y3JvcCwxMjc5LDEwMDAsMCwxMzk.png"
 				alt="Emblema de FutVôlei"
 				width="220px"
+				  @click="goToHome"
+          style="cursor: pointer;"
 			/>
 			<div class="search-input">
 				<input
@@ -58,6 +60,9 @@ export default {
 		handleSearch() {
 			console.log("Pesquisando por:", this.searchQuery);
 		},
+		goToHome() {
+      this.$router.push('/');
+    }
 	},
 };
 </script>
@@ -117,10 +122,9 @@ export default {
 .search-icon {
 	position: absolute;
 	left: 90%;
-	top: 50%;
+	top: 55%;
 	transform: translateY(-50%);
 	color: #ffd200;
-
 	font-size: 25px;
 	cursor: pointer;
 }
@@ -128,7 +132,53 @@ export default {
 .icon-log {
 	position: absolute;
 	top: 90px;
-	right: 16%;
+	right: 17%;
 	color: #ffd200;
+}
+
+@media (max-width: 1020px) {
+  .search-input {
+	width: 30%;
+  }
+  .icon-log {	
+	right: 19%;
+}
+.search-text-input {
+	padding-left: 15px;
+}
+.search-icon{
+	left: 80%;
+}
+
+}
+
+
+@media (max-width: 920px) {
+ .search-input{
+	display: none;
+ }
+ .icon-log {	
+	right: 31%;
+}
+}
+
+@media (max-width: 520px) {
+ .search-input{
+	display: none;
+ }
+ .icon-log {	
+	right: 35%;
+}
+
+}
+
+@media (max-width: 375px) {
+ .search-input{
+	display: none;
+ }
+ .icon-log {	
+	right: 35%;
+}
+
 }
 </style>
