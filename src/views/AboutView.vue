@@ -4,7 +4,7 @@
 		<div class="d-flex justify-center">
 			<Perfilproduct />
 		</div>
-		<RodaPe />
+		<Footer />
 	</div>
 </template>
 
@@ -12,13 +12,13 @@
 import MenuBar from "@/components/MenuBar.vue";
 import Perfilproduct from "@/components/PerfilProduct.vue";
 
-import RodaPe from "@/components/RodaPe.vue";
+import Footer from "@/components/Footer.vue";
 
 export default {
 	name: "AboutView",
 	components: {
 		MenuBar,
-		RodaPe,
+		Footer,
 		Perfilproduct,
 	},
 };

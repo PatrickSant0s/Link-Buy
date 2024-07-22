@@ -4,7 +4,7 @@
 			<div class="logo-box">
 				<a
 					class="logo"
-					href="http://www.athletabrasil.com"
+					href=""
 					title="Athleta Brasil"
 					aria-label="Athleta Brasil"
 				>
@@ -14,6 +14,7 @@
 						src="https://mir-s3-cdn-cf.behance.net/projects/404/db2257135246647.Y3JvcCwxMjc5LDEwMDAsMCwxMzk.png"
 						fetchpriority="high"
 						alt="Athleta Brasil"
+						class="bt-2 icon"
 					/>
 				</a>
 				<div class="social-media flex align-center">
@@ -46,37 +47,6 @@
 					</a>
 				</div>
 			</div>
-
-			<div class="">
-				<div class="title">Institucional</div>
-				<div class="overflow">
-					<ul class="list">
-						<li>
-							<a href="/a-athleta" title="A Marca">A Marca</a>
-						</li>
-						<li>
-							<a href="/como-comprar" title="Como comprar">Como comprar</a>
-						</li>
-						<li>
-							<a href="/pagamento" title="Pagamento">Pagamento</a>
-						</li>
-						<li>
-							<a href="/tempo-de-garantia" title="Tempo de Garantia"
-								>Tempo de Garantia</a
-							>
-						</li>
-						<li>
-							<a href="/politica-de-troca" title="Politica de Troca"
-								>Politica de Troca</a
-							>
-						</li>
-						<li>
-							<a href="/contato" title="Fale Conosco">Fale Conosco</a>
-						</li>
-					</ul>
-				</div>
-			</div>
-
 			<div class="box-infos">
 				<div class="title">Atendimento</div>
 				<div class="overflow">
@@ -107,7 +77,7 @@
 			</div>
 			<div>
 				<div class="title">Formas de pagamento</div>
-				<ul class="payment-list">
+				<ul class="payment-list justify-center">
 					<li class="payment-form">
 						<img
 							class="lazyload loaded"
@@ -121,22 +91,6 @@
 							class="lazyload loaded"
 							alt="Cartão MasterCard - Vindi"
 							src="https://images.tcdn.com.br/commerce/assets/store/img/icons/formas_pagamento/pag_peqmastercardtraycheckout.png?c791ee81face65a0c33ad0bf0c8428fe"
-							data-ll-status="loaded"
-						/>
-					</li>
-					<li class="payment-form">
-						<img
-							class="lazyload loaded"
-							alt="Cartão Diners - Vindi"
-							src="https://images.tcdn.com.br/commerce/assets/store/img/icons/formas_pagamento/pag_peqdinerstraycheckout.png?c791ee81face65a0c33ad0bf0c8428fe"
-							data-ll-status="loaded"
-						/>
-					</li>
-					<li class="payment-form">
-						<img
-							class="lazyload loaded"
-							alt="Cartão Amex - Vindi"
-							src="https://images.tcdn.com.br/commerce/assets/store/img/icons/formas_pagamento/pag_peqamextraycheckout.png?c791ee81face65a0c33ad0bf0c8428fe"
 							data-ll-status="loaded"
 						/>
 					</li>
@@ -167,27 +121,13 @@
 					<li class="payment-form">
 						<img
 							class="lazyload loaded"
-							alt="Boleto - Vindi"
-							src="https://images.tcdn.com.br/commerce/assets/store/img/icons/formas_pagamento/pag_peqboletotraycheckout.png?c791ee81face65a0c33ad0bf0c8428fe"
+							alt="Cartão Hiper - Vindi"
+							src="https://images.tcdn.com.br/commerce/assets/store/img/icons/formas_pagamento/pag_peqcartaohiperit.png?c791ee81face65a0c33ad0bf0c8428fe"
 							data-ll-status="loaded"
 						/>
 					</li>
-					<li class="payment-form">
-						<img
-							class="lazyload loaded"
-							alt="Auxílio Emergencial Caixa - Vindi"
-							src="https://images.tcdn.com.br/commerce/assets/store/img/icons/formas_pagamento/pag_peqAuxilioEmergencialCaixa.png?c791ee81face65a0c33ad0bf0c8428fe"
-							data-ll-status="loaded"
-						/>
-					</li>
-					<li class="payment-form">
-						<img
-							class="lazyload loaded"
-							alt="Pix - Vindi"
-							src="https://images.tcdn.com.br/commerce/assets/store/img/icons/formas_pagamento/pag_peqpix.png?c791ee81face65a0c33ad0bf0c8428fe"
-							data-ll-status="loaded"
-						/>
-					</li>
+	
+	
 				</ul>
 			</div>
 		</div>
@@ -197,8 +137,8 @@
 <style scoped>
 .container {
 	width: 100%;
-	gap: 50px;
-	margin-top: 50px;
+	gap: 90px;
+	margin-top: 40px;
 }
 
 .title {
@@ -207,6 +147,7 @@
 	font-size: 0.87rem;
 	font-weight: 700;
 	margin-bottom: 8px;
+	text-align: center;
 }
 
 .list {
@@ -216,7 +157,7 @@
 	line-height: 1.5;
 	padding: 5px 0;
 	transition: ease-out 0.2s;
-
+	text-align: center;
 	color: var(--color_footer_second_font);
 }
 
@@ -249,5 +190,31 @@ a {
 .payment-form img {
 	max-width: 100%;
 	height: auto;
+}
+
+@media (max-width: 780px) {
+   .container  {
+	gap: 14px;
+   }
+
+   .title{
+	font-size: 20px;
+   }
+   .icon{
+	width: 140px;
+	height: 100px;
+   }
+}
+
+
+
+@media (max-width: 520px) {
+   .container  {
+	flex-direction: column;
+	margin: auto;
+	align-items: center;
+   }
+
+   
 }
 </style>

@@ -14,7 +14,7 @@
 		<h1 class="title">Eventos</h1>
 		<CarrouselEventos />
 		<div>
-			<RodaPe />
+			<Footer />
 		</div>
 	</div>
 </template>
@@ -24,7 +24,7 @@ import MenuBar from "@/components/MenuBar.vue";
 import CardProduto from "@/components/CardProduto.vue";
 import FilterProduct from "@/components/FilterProduct.vue";
 import CarrouselEventos from "@/components/CarrouselEventos.vue";
-import RodaPe from "@/components/RodaPe.vue";
+import Footer from "@/components/Footer.vue";
 
 export default {
 	name: "HomeView",
@@ -33,7 +33,7 @@ export default {
 		CardProduto,
 		FilterProduct,
 		CarrouselEventos,
-		RodaPe,
+		Footer,
 	},
 };
 </script>
