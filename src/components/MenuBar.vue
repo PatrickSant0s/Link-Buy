@@ -9,7 +9,7 @@
 				style="cursor: pointer"
 				class="emblem"
 			/>
-			<div class="search-input">
+			<!-- <div class="search-input">
 				<input
 					type="text"
 					v-model="searchQuery"
@@ -20,7 +20,7 @@
 				<span class="search-icon">
 					<iconify-icon icon="fa-solid:search" />
 				</span>
-			</div>
+			</div> -->
 			<div style="display: flex">
 				<div class="icon-log">
 					<iconify-icon
@@ -136,7 +136,7 @@ export default {
 .icon-log {
 	position: absolute;
 	top: 90px;
-	right: 17%;
+	right: 28%;
 	color: #ffd200;
 }
 
@@ -144,9 +144,7 @@ export default {
 	.search-input {
 		width: 30%;
 	}
-	.icon-log {
-		right: 19%;
-	}
+	
 	.search-text-input {
 		padding-left: 15px;
 	}
