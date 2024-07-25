@@ -1,6 +1,6 @@
 <template>
 	<div><MenuBar /></div>
-	<div class="container mt-16">
+	<div class="container mt-16 mb-16">
 		<!-- Card com a imagem do produto -->
 		<v-card class="">
 			<div v-if="product">
@@ -89,7 +89,9 @@
 				</v-row>
 			</div>
 		</v-card>
+		
 	</div>
+	<Footer/>
 </template>
 
 <script>
@@ -98,10 +100,11 @@ import { produtos } from "@/utils/CardContext";
 import StarRating from "vue-star-rating";
 import MenuBar from "./MenuBar.vue";
 import { Icon } from "@iconify/vue";
+import Footer from "@/components/Footer.vue"
 
 export default {
 	name: "PerfilProduct",
-	components: { StarRating, MenuBar, Icon },
+	components: { StarRating, MenuBar, Icon, Footer },
 	data() {
 		return {
 			produtos: produtos,

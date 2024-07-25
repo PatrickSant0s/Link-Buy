@@ -9,8 +9,8 @@
 					aria-label="Athleta Brasil"
 				>
 					<img
-						width="222"
-						height="166"
+						width="200"
+						height="130"
 						src="https://mir-s3-cdn-cf.behance.net/projects/404/db2257135246647.Y3JvcCwxMjc5LDEwMDAsMCwxMzk.png"
 						fetchpriority="high"
 						alt="Athleta Brasil"
