@@ -20,7 +20,7 @@
 							color="#0d0d0d"
 						>
 							<div class="d-flex flex-column">
-								<span class="name mx-auto ">{{ product.nome }}</span>
+								<span class="name mx-auto">{{ product.nome }}</span>
 								<div class="rating-container">
 									<star-rating
 										v-bind:increment="0.5"
@@ -41,16 +41,9 @@
 							<div class="tamanhos-disponiveis">
 								<h3>Tamanhos Disponíveis:</h3>
 								<v-select
-								style="width: 50%; margin: auto"
+									style="width: 50%; margin: auto"
 									label="Select"
-									:items="[
-										'PP',
-										'P',
-										'M',
-										'G',
-										'GG',
-										'XG',
-									]"
+									:items="['PP', 'P', 'M', 'G', 'GG', 'XG']"
 									variant="solo-inverted"
 								></v-select>
 							</div>

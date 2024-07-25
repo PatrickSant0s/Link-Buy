@@ -36,7 +36,7 @@
 					<div class="account-links link">
 						<a href="" class="link">Entrar</a>
 						/
-						<a href="" class="link">Cadastrar</a>
+						<a href="" class="link" @click="goRegister">Cadastrar</a>
 					</div>
 				</nav>
 			</div>
@@ -63,6 +63,9 @@ export default {
 		},
 		goToHome() {
 			this.$router.push("/");
+		},
+		goRegister() {
+			this.$router.push("/register");
 		},
 	},
 };
