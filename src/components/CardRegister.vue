@@ -151,19 +151,19 @@ export default {
       this.confirmPassword = "";
       this.clearErrorMessages();
 
-    //   // Define a mensagem de sucesso e ativa o alerta de sucesso
-    //   this.successMessage = "Registro realizado com sucesso! Você será direcionado para a área de login";
-    //   this.isSuccess = true;
+      // // Define a mensagem de sucesso e ativa o alerta de sucesso
+      // this.successMessage = "Registro realizado com sucesso! Você será direcionado para a área de login";
+      // this.isSuccess = true;
 
-    //   setTimeout(() => {
-    //     // Redireciona para a página de login após um atraso de 3 segundos
-    //     this.$router.push("/login").catch((err) => {
-    //       if (err.name !== "NavigationDuplicated") {
-    //         throw err;
-    //       }
-    //     });
-    //   }, 3200);
-    // },
+      // setTimeout(() => {
+      //   // Redireciona para a página de login após um atraso de 3 segundos
+      //   this.$router.push("/login").catch((err) => {
+      //     if (err.name !== "NavigationDuplicated") {
+      //       throw err;
+      //     }
+      //   });
+      // }, 3200);
+    },
     clearErrorMessages() {
       this.userNameErrorMessage = "";
       this.lastNameErrorMessage = "";
