@@ -1,7 +1,7 @@
 <template>
-  <div class="">
+  <div>
     <div>
-     <div><MenuBar /></div>
+      <MenuBar />
     </div>
     <div class="registro success-alert" v-if="isSuccess">
       {{ successMessage }}
@@ -9,18 +9,10 @@
     <v-card class="mx-auto mt-10 mb-10 custom-scope" max-width="400" height="" title="Novo Cliente">
       <v-container id="register-form">
         <v-text-field
-          v-model="firstName"
-          label="First name"
+          v-model="userName"
+          label="Username"
           variant="underlined"
-          :error-messages="firstNameErrorMessage"
-        ></v-text-field>
-
-        <v-text-field
-          v-model="lastName"
-          color="primary"
-          label="Last name"
-          variant="underlined"
-          :error-messages="lastNameErrorMessage"
+          :error-messages="userNameErrorMessage"
         ></v-text-field>
 
         <v-text-field
@@ -33,24 +25,38 @@
 
         <v-text-field
           v-model="password"
-           type="password"
+          :type="showPassword ? 'text' : 'password'"
           color="primary"
-          label="Password"
+          label="Senha"
           placeholder="Enter your password"
           variant="underlined"
+          :append-icon="showPassword ? 'mdi-eye-off' : 'mdi-eye'"
+          @click:append="toggleShowPassword"
           :error-messages="passwordErrorMessage"
         ></v-text-field>
+
+        <v-text-field
+          v-model="confirmPassword"
+          :type="showConfirmPassword ? 'text' : 'password'"
+          color="primary"
+          label="Confirmar Senha"
+          placeholder="Enter your password"
+          variant="underlined"
+          :append-icon="showConfirmPassword ? 'mdi-eye-off' : 'mdi-eye'"
+          @click:append="toggleShowConfirmPassword"
+          :error-messages="confirmPasswordErrorMessage"
+        ></v-text-field>
+
       </v-container>
 
-<v-checkbox label="Concordo com o Termo de Uso e  a Político de Privacidade"></v-checkbox>
+      <v-checkbox label="Concordo com o Termo de Uso e a Política de Privacidade"></v-checkbox>
 
       <v-divider></v-divider>
 
       <v-card-actions>
-
-       	<button class="custom-button"  @click="registerUser">
-						Registrar
-						</button>
+        <button class="custom-button" @click="registerUser">
+          Registrar
+        </button>
       </v-card-actions>
     </v-card>
     
@@ -64,91 +70,110 @@ import MenuBar from "./MenuBar.vue";
 
 export default {
   name: "UserRegister",
-  components:{
-MenuBar,Footer 
+  components: {
+    MenuBar, Footer
   },
   data() {
     return {
       email: "",
-      firstName: "",
+      userName: "",
       lastName: "",
       password: "",
-      firstNameErrorMessage: "",
+      confirmPassword: "",
+      showPassword: false,
+      showConfirmPassword: false,
+      userNameErrorMessage: "",
       lastNameErrorMessage: "",
       emailErrorMessage: "",
+      confirmPasswordErrorMessage: "",
       passwordErrorMessage: "",
       successMessage: "",
       isSuccess: false, // Adiciona uma variável de estado para controlar a exibição do alerta de sucesso
     };
   },
   methods: {
+    toggleShowPassword() {
+      this.showPassword = !this.showPassword;
+    },
+    toggleShowConfirmPassword() {
+      this.showConfirmPassword = !this.showConfirmPassword;
+    },
     validateEmail(email) {
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       return emailRegex.test(email);
     },
     registerUser() {
-      if (this.firstName.length < 3 || this.lastName.length < 3) {
-        this.firstNameErrorMessage =
-          "O nome e o sobrenome devem ter pelo menos 3 caracteres.";
+      if (this.password !== this.confirmPassword) {
+        this.confirmPasswordErrorMessage = 'As senhas não correspondem';
         return;
+      } else {
+        this.confirmPasswordErrorMessage = '';
+      }
+
+      if (this.userName.length < 3) {
+        this.userNameErrorMessage = "O Username deve ter pelo menos 3 caracteres.";
+        return;
+      } else {
+        this.userNameErrorMessage = '';
       }
 
       if (!this.validateEmail(this.email)) {
         this.emailErrorMessage = "Por favor, insira um email válido.";
         return;
+      } else {
+        this.emailErrorMessage = '';
       }
-      if (
-        this.password.length < 3 ||
-        !/[!@#$%^&*(),.?":{}|<>]/.test(this.password)
-      ) {
-        this.passwordErrorMessage =
-          "A senha deve ter pelo menos 3 caracteres e conter um caractere especial.";
+
+      if (this.password.length < 3 || !/[!@#$%^&*(),.?":{}|<>]/.test(this.password)) {
+        this.passwordErrorMessage = "A senha deve ter pelo menos 3 caracteres e conter um caractere especial.";
         return;
+      } else {
+        this.passwordErrorMessage = '';
       }
 
       const newUser = {
-        firstName: this.firstName,
+        userName: this.userName,
         lastName: this.lastName,
         email: this.email,
         password: this.password,
         status: "Cadastrado",
       };
 
-      const existingUsers =
-        JSON.parse(window.localStorage.getItem("users")) || [];
+      const existingUsers = JSON.parse(window.localStorage.getItem("users")) || [];
       existingUsers.push(newUser);
       window.localStorage.setItem("users", JSON.stringify(existingUsers));
+      console.log(existingUsers);
 
-      this.firstName = "";
+      this.userName = "";
       this.lastName = "";
       this.email = "";
       this.password = "";
+      this.confirmPassword = "";
       this.clearErrorMessages();
 
-      // Define a mensagem de sucesso e ativa o alerta de sucesso
-      this.successMessage =
-        "Registro realizado com sucesso! Você vai ser direcionado para área de login";
-      this.isSuccess = true;
+    //   // Define a mensagem de sucesso e ativa o alerta de sucesso
+    //   this.successMessage = "Registro realizado com sucesso! Você será direcionado para a área de login";
+    //   this.isSuccess = true;
 
-      setTimeout(() => {
-        // Redireciona para a página de login após um atraso de 3 segundos
-        this.$router.push("/login").catch((err) => {
-          if (err.name !== "NavigationDuplicated") {
-            throw err;
-          }
-        });
-      }, 3200);
-    },
+    //   setTimeout(() => {
+    //     // Redireciona para a página de login após um atraso de 3 segundos
+    //     this.$router.push("/login").catch((err) => {
+    //       if (err.name !== "NavigationDuplicated") {
+    //         throw err;
+    //       }
+    //     });
+    //   }, 3200);
+    // },
     clearErrorMessages() {
-      this.firstNameErrorMessage = "";
+      this.userNameErrorMessage = "";
       this.lastNameErrorMessage = "";
       this.emailErrorMessage = "";
       this.passwordErrorMessage = "";
+      this.confirmPasswordErrorMessage = "";
     },
   },
 };
 </script>
-
 <style >
 .registro {
   /* Define a cor verde para o alerta de sucesso */
