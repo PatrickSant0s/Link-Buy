@@ -1,56 +1,63 @@
 <template>
-  <div class="">
+  <div>
     <div>
-     <div><MenuBar /></div>
+      <MenuBar />
     </div>
     <div class="registro success-alert" v-if="isSuccess">
       {{ successMessage }}
     </div>
     <v-card class="mx-auto mt-10 mb-10 custom-scope" max-width="400" height="" title="Novo Cliente">
-      <v-container id="register-form">
+      <v-form ref="form" validate-on="input">
         <v-text-field
-          v-model="firstName"
-          label="First name"
+					name="username"
+          label="Username"
           variant="underlined"
-          :error-messages="firstNameErrorMessage"
+					:rules="usernameRules"
         ></v-text-field>
 
         <v-text-field
-          v-model="lastName"
-          color="primary"
-          label="Last name"
-          variant="underlined"
-          :error-messages="lastNameErrorMessage"
-        ></v-text-field>
-
-        <v-text-field
-          v-model="email"
+					name="email"
           color="primary"
           label="Email"
           variant="underlined"
-          :error-messages="emailErrorMessage"
+					:rules="emailRules"
         ></v-text-field>
 
         <v-text-field
-          v-model="password"
-           type="password"
+					name="password"
+					v-model="password"
+          :type="showPassword ? 'text' : 'password'"
           color="primary"
-          label="Password"
+          label="Senha"
           placeholder="Enter your password"
           variant="underlined"
-          :error-messages="passwordErrorMessage"
+          :append-icon="showPassword ? 'mdi-eye-off' : 'mdi-eye'"
+					:rules="passwordRules"
+          @click:append="toggleShowPassword"
         ></v-text-field>
-      </v-container>
 
-<v-checkbox label="Concordo com o Termo de Uso e  a Político de Privacidade"></v-checkbox>
+        <v-text-field
+					name="confirmPassword"
+          :type="showConfirmPassword ? 'text' : 'password'"
+          color="primary"
+          label="Confirmar Senha"
+          placeholder="Enter your password"
+          variant="underlined"
+          :append-icon="showConfirmPassword ? 'mdi-eye-off' : 'mdi-eye'"
+					:rules="confirmPasswordRules"
+          @click:append="toggleShowConfirmPassword"
+        ></v-text-field>
+
+      </v-form>
+
+      <!-- <v-checkbox label="Concordo com o Termo de Uso e a Política de Privacidade"></v-checkbox> -->
 
       <v-divider></v-divider>
 
       <v-card-actions>
-
-       	<button class="custom-button"  @click="registerUser">
-						Registrar
-						</button>
+        <button class="custom-button" @click="registerUser">
+          Registrar
+        </button>
       </v-card-actions>
     </v-card>
     
@@ -64,91 +71,97 @@ import MenuBar from "./MenuBar.vue";
 
 export default {
   name: "UserRegister",
-  components:{
-MenuBar,Footer 
+  components: {
+    MenuBar, Footer
   },
   data() {
     return {
-      email: "",
-      firstName: "",
-      lastName: "",
-      password: "",
-      firstNameErrorMessage: "",
-      lastNameErrorMessage: "",
-      emailErrorMessage: "",
-      passwordErrorMessage: "",
+			password: "",
+      showPassword: false,
+      showConfirmPassword: false,
       successMessage: "",
       isSuccess: false, // Adiciona uma variável de estado para controlar a exibição do alerta de sucesso
+			usernameRules: [
+				v => Boolean(v) || 'O nome de usuário é obrigatório',
+				v => v.length >= 3 || 'O nome de usuário deve ter pelo menos 3 caracteres',
+			],
+			emailRules: [
+				v => Boolean(v) || 'E-mail é obrigatório',
+				v => this.validateEmail(v) || 'E-mail deve ser válido',
+			],
+			passwordRules: [
+				v => Boolean(v) || 'A senha é obrigatória',
+				v => v.length >= 3 || 'A senha deve ter pelo menos 3 caracteres',
+				v => this.validatePassword(v) || 'A senha deve conter um caractere especial',
+			],
+			confirmPasswordRules: [
+				v => Boolean(v) || 'Confirmação de senha é obrigatória',
+				v => this.validateConfirmPassword(v) || 'As senhas não correspondem',
+			],
     };
   },
   methods: {
+    toggleShowPassword() {
+      this.showPassword = !this.showPassword;
+    },
+    toggleShowConfirmPassword() {
+      this.showConfirmPassword = !this.showConfirmPassword;
+    },
     validateEmail(email) {
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       return emailRegex.test(email);
     },
-    registerUser() {
-      if (this.firstName.length < 3 || this.lastName.length < 3) {
-        this.firstNameErrorMessage =
-          "O nome e o sobrenome devem ter pelo menos 3 caracteres.";
-        return;
-      }
+		validatePassword(password	) {
+			const passwordRegex = /[!@#$%^&*(),.?":{}|<>]/;
 
-      if (!this.validateEmail(this.email)) {
-        this.emailErrorMessage = "Por favor, insira um email válido.";
-        return;
-      }
-      if (
-        this.password.length < 3 ||
-        !/[!@#$%^&*(),.?":{}|<>]/.test(this.password)
-      ) {
-        this.passwordErrorMessage =
-          "A senha deve ter pelo menos 3 caracteres e conter um caractere especial.";
-        return;
-      }
+			return passwordRegex.test(password);
+		},
+		validateConfirmPassword(confirmPassword) {
+			return this.password === confirmPassword;
+		},
+    async registerUser() {
+			const { valid } = await this.$refs.form.validate();
+
+			if (!valid) {
+				return;
+			}
+
+			const form = new FormData(this.$refs.form.$el);
+
+			const username = form.get("username");
+			const email = form.get("email");
+			const password = form.get("password");
 
       const newUser = {
-        firstName: this.firstName,
-        lastName: this.lastName,
-        email: this.email,
-        password: this.password,
+        username,
+        email,
+        password,
         status: "Cadastrado",
       };
 
-      const existingUsers =
-        JSON.parse(window.localStorage.getItem("users")) || [];
+      const existingUsers = JSON.parse(window.localStorage.getItem("users")) || [];
       existingUsers.push(newUser);
       window.localStorage.setItem("users", JSON.stringify(existingUsers));
+      console.log(newUser);
 
-      this.firstName = "";
-      this.lastName = "";
-      this.email = "";
       this.password = "";
-      this.clearErrorMessages();
 
-      // Define a mensagem de sucesso e ativa o alerta de sucesso
-      this.successMessage =
-        "Registro realizado com sucesso! Você vai ser direcionado para área de login";
-      this.isSuccess = true;
+      // // Define a mensagem de sucesso e ativa o alerta de sucesso
+      // this.successMessage = "Registro realizado com sucesso! Você será direcionado para a área de login";
+      // this.isSuccess = true;
 
-      setTimeout(() => {
-        // Redireciona para a página de login após um atraso de 3 segundos
-        this.$router.push("/login").catch((err) => {
-          if (err.name !== "NavigationDuplicated") {
-            throw err;
-          }
-        });
-      }, 3200);
-    },
-    clearErrorMessages() {
-      this.firstNameErrorMessage = "";
-      this.lastNameErrorMessage = "";
-      this.emailErrorMessage = "";
-      this.passwordErrorMessage = "";
+      // setTimeout(() => {
+      //   // Redireciona para a página de login após um atraso de 3 segundos
+      //   this.$router.push("/login").catch((err) => {
+      //     if (err.name !== "NavigationDuplicated") {
+      //       throw err;
+      //     }
+      //   });
+      // }, 3200);
     },
   },
 };
 </script>
-
 <style >
 .registro {
   /* Define a cor verde para o alerta de sucesso */
