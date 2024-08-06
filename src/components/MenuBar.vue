@@ -151,6 +151,9 @@ export default {
 	.search-icon {
 		left: 80%;
 	}
+	.icon-log {
+		right: 29%;
+	}
 }
 
 @media (max-width: 920px) {
