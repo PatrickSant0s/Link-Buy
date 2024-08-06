@@ -7,49 +7,50 @@
       {{ successMessage }}
     </div>
     <v-card class="mx-auto mt-10 mb-10 custom-scope" max-width="400" height="" title="Novo Cliente">
-      <v-container id="register-form">
+      <v-form ref="form" validate-on="input">
         <v-text-field
-          v-model="userName"
+					name="username"
           label="Username"
           variant="underlined"
-          :error-messages="userNameErrorMessage"
+					:rules="usernameRules"
         ></v-text-field>
 
         <v-text-field
-          v-model="email"
+					name="email"
           color="primary"
           label="Email"
           variant="underlined"
-          :error-messages="emailErrorMessage"
+					:rules="emailRules"
         ></v-text-field>
 
         <v-text-field
-          v-model="password"
+					name="password"
+					v-model="password"
           :type="showPassword ? 'text' : 'password'"
           color="primary"
           label="Senha"
           placeholder="Enter your password"
           variant="underlined"
           :append-icon="showPassword ? 'mdi-eye-off' : 'mdi-eye'"
+					:rules="passwordRules"
           @click:append="toggleShowPassword"
-          :error-messages="passwordErrorMessage"
         ></v-text-field>
 
         <v-text-field
-          v-model="confirmPassword"
+					name="confirmPassword"
           :type="showConfirmPassword ? 'text' : 'password'"
           color="primary"
           label="Confirmar Senha"
           placeholder="Enter your password"
           variant="underlined"
           :append-icon="showConfirmPassword ? 'mdi-eye-off' : 'mdi-eye'"
+					:rules="confirmPasswordRules"
           @click:append="toggleShowConfirmPassword"
-          :error-messages="confirmPasswordErrorMessage"
         ></v-text-field>
 
-      </v-container>
+      </v-form>
 
-      <v-checkbox label="Concordo com o Termo de Uso e a Política de Privacidade"></v-checkbox>
+      <!-- <v-checkbox label="Concordo com o Termo de Uso e a Política de Privacidade"></v-checkbox> -->
 
       <v-divider></v-divider>
 
@@ -75,20 +76,28 @@ export default {
   },
   data() {
     return {
-      email: "",
-      userName: "",
-      lastName: "",
-      password: "",
-      confirmPassword: "",
+			password: "",
       showPassword: false,
       showConfirmPassword: false,
-      userNameErrorMessage: "",
-      lastNameErrorMessage: "",
-      emailErrorMessage: "",
-      confirmPasswordErrorMessage: "",
-      passwordErrorMessage: "",
       successMessage: "",
       isSuccess: false, // Adiciona uma variável de estado para controlar a exibição do alerta de sucesso
+			usernameRules: [
+				v => Boolean(v) || 'O nome de usuário é obrigatório',
+				v => v.length >= 3 || 'O nome de usuário deve ter pelo menos 3 caracteres',
+			],
+			emailRules: [
+				v => Boolean(v) || 'E-mail é obrigatório',
+				v => this.validateEmail(v) || 'E-mail deve ser válido',
+			],
+			passwordRules: [
+				v => Boolean(v) || 'A senha é obrigatória',
+				v => v.length >= 3 || 'A senha deve ter pelo menos 3 caracteres',
+				v => this.validatePassword(v) || 'A senha deve conter um caractere especial',
+			],
+			confirmPasswordRules: [
+				v => Boolean(v) || 'Confirmação de senha é obrigatória',
+				v => this.validateConfirmPassword(v) || 'As senhas não correspondem',
+			],
     };
   },
   methods: {
@@ -102,54 +111,40 @@ export default {
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       return emailRegex.test(email);
     },
-    registerUser() {
-      if (this.password !== this.confirmPassword) {
-        this.confirmPasswordErrorMessage = 'As senhas não correspondem';
-        return;
-      } else {
-        this.confirmPasswordErrorMessage = '';
-      }
+		validatePassword(password	) {
+			const passwordRegex = /[!@#$%^&*(),.?":{}|<>]/;
 
-      if (this.userName.length < 3) {
-        this.userNameErrorMessage = "O Username deve ter pelo menos 3 caracteres.";
-        return;
-      } else {
-        this.userNameErrorMessage = '';
-      }
+			return passwordRegex.test(password);
+		},
+		validateConfirmPassword(confirmPassword) {
+			return this.password === confirmPassword;
+		},
+    async registerUser() {
+			const { valid } = await this.$refs.form.validate();
 
-      if (!this.validateEmail(this.email)) {
-        this.emailErrorMessage = "Por favor, insira um email válido.";
-        return;
-      } else {
-        this.emailErrorMessage = '';
-      }
+			if (!valid) {
+				return;
+			}
 
-      if (this.password.length < 3 || !/[!@#$%^&*(),.?":{}|<>]/.test(this.password)) {
-        this.passwordErrorMessage = "A senha deve ter pelo menos 3 caracteres e conter um caractere especial.";
-        return;
-      } else {
-        this.passwordErrorMessage = '';
-      }
+			const form = new FormData(this.$refs.form.$el);
+
+			const username = form.get("username");
+			const email = form.get("email");
+			const password = form.get("password");
 
       const newUser = {
-        userName: this.userName,
-        lastName: this.lastName,
-        email: this.email,
-        password: this.password,
+        username,
+        email,
+        password,
         status: "Cadastrado",
       };
 
       const existingUsers = JSON.parse(window.localStorage.getItem("users")) || [];
       existingUsers.push(newUser);
       window.localStorage.setItem("users", JSON.stringify(existingUsers));
-      console.log(existingUsers);
+      console.log(newUser);
 
-      this.userName = "";
-      this.lastName = "";
-      this.email = "";
       this.password = "";
-      this.confirmPassword = "";
-      this.clearErrorMessages();
 
       // // Define a mensagem de sucesso e ativa o alerta de sucesso
       // this.successMessage = "Registro realizado com sucesso! Você será direcionado para a área de login";
@@ -163,13 +158,6 @@ export default {
       //     }
       //   });
       // }, 3200);
-    },
-    clearErrorMessages() {
-      this.userNameErrorMessage = "";
-      this.lastNameErrorMessage = "";
-      this.emailErrorMessage = "";
-      this.passwordErrorMessage = "";
-      this.confirmPasswordErrorMessage = "";
     },
   },
 };
