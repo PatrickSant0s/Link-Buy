@@ -3,31 +3,25 @@
     <v-card class="mx-auto mt-10 mb-10 custom-scope" max-width="400" title="Novo Cliente">
       <v-container id="register-form">
         <v-text-field
-          id="email"
+          name="email"
           v-model="email"
-          :readonly="loading"
-          :rules="[required]"
-          class="mb-2"
-          clearable
           color="primary"
           label="Email"
           variant="underlined"
-          :error-messages="emailErrorMessage"
+          :rules="emailRules"
         ></v-text-field>
 
         <v-text-field
+          name="password"
           v-model="password"
           :type="showPassword ? 'text' : 'password'"
-          :readonly="loading"
-          :rules="[required]"
-          clearable
           color="primary"
           label="Senha"
           placeholder="Digite sua senha"
           variant="underlined"
           :append-icon="showPassword ? 'mdi-eye-off' : 'mdi-eye'"
+          :rules="passwordRules"
           @click:append="toggleShowPassword"
-          :error-messages="passwordErrorMessage"
         ></v-text-field>
       </v-container>
 
@@ -52,6 +46,7 @@
 
 <script>
 import Footer from "./Footer.vue";
+
 export default {
   name: "UserLogin",
   components: {
@@ -63,13 +58,22 @@ export default {
       password: "",
       showPassword: false,
       loading: false,
-      emailErrorMessage: "",
-      passwordErrorMessage: "",
+      emailRules: [
+        v => Boolean(v) || 'E-mail é obrigatório',
+        v => this.validateEmail(v) || 'E-mail deve ser válido',
+      ],
+      passwordRules: [
+        v => Boolean(v) || 'A senha é obrigatória',
+        v => v.length >= 3 || 'A senha deve ter pelo menos 3 caracteres',
+        v => this.validatePassword(v) || 'A senha deve conter um caractere especial',
+      ],
     };
   },
   computed: {
     formValido() {
-      return this.email && this.password;
+      const emailValid = this.emailRules.every(rule => rule(this.email) === true);
+      const passwordValid = this.passwordRules.every(rule => rule(this.password) === true);
+      return emailValid && passwordValid;
     }
   },
   methods: {
@@ -77,16 +81,8 @@ export default {
       this.showPassword = !this.showPassword;
     },
     onSubmit() {
-      this.emailErrorMessage = '';
-      this.passwordErrorMessage = '';
-
-      if (!this.validarCampos(this.email, this.password)) {
+      if (!this.formValido) {
         alert('Por favor, preencha ambos os campos corretamente.');
-        return;
-      }
-
-      if (!this.validateEmail(this.email)) {
-        this.emailErrorMessage = "Por favor, insira um email válido.";
         return;
       }
 
@@ -98,21 +94,21 @@ export default {
         localStorage.setItem('token', 'your_token_here');
       } else {
         alert('Usuário não encontrado. Por favor, verifique seus dados e registre-se.');
-        this.$router.push('').catch();
+        this.$router.push('/').catch();
       }
-    },
-    validarCampos(email, password) {
-      this.emailErrorMessage = email ? "" : "O campo de email é obrigatório";
-      this.passwordErrorMessage = password ? "" : "O campo de senha é obrigatório";
-      return email && password;
     },
     validateEmail(email) {
       const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@(([^<>()[\]\.,;:\s@"]+\.)+[^<>()[\]\.,;:\s@"]{2,})$/i;
       return re.test(String(email).toLowerCase());
-    }
+    },
+    validatePassword(password) {
+      const specialCharRegex = /[!@#\$%\^\&*\)\(+=._-]/;
+      return specialCharRegex.test(password);
+    },
   }
 };
 </script>
+
 
 
 <style scoped>
