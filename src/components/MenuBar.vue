@@ -33,8 +33,8 @@
 					<div class="account-header">
 						<span class="account">Minha conta</span>
 					</div>
-					<div class="account-links link">
-						<a href="" class="link">Entrar</a>
+					<div class="account-links link" >
+						<a href="" class="link" @click="goLogin">Entrar</a>
 						/
 						<a href="" class="link" @click="goRegister">Cadastrar</a>
 					</div>
@@ -66,6 +66,9 @@ export default {
 		},
 		goRegister() {
 			this.$router.push("/register");
+		},
+		goLogin() {
+			this.$router.push("/login");
 		},
 	},
 };
@@ -150,6 +153,9 @@ export default {
 	}
 	.search-icon {
 		left: 80%;
+	}
+	.icon-log {
+		right: 29%;
 	}
 }
 
