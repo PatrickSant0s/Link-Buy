@@ -1,7 +1,7 @@
 <template>
   <div class="Menu-Principal">
     <v-card class="mx-auto mt-10 mb-10 custom-scope" max-width="400" title="Novo Cliente">
-      <v-container id="register-form">
+      <v-form ref="form" validate-on="input">
         <v-text-field
           name="email"
           v-model="email"
@@ -23,22 +23,21 @@
           :rules="passwordRules"
           @click:append="toggleShowPassword"
         ></v-text-field>
-      </v-container>
-
-      <v-divider></v-divider>
-
-      <v-card-actions>
-        <v-btn
+				
+				<v-divider></v-divider>
+				
+				<v-card-actions>
+					<v-btn
           class="custom-button"
           @click="onSubmit"
-          :disabled="!formValido"
           :loading="loading"
           block
           color="success"
-        >
+					>
           Entrar
         </v-btn>
       </v-card-actions>
+		</v-form>
     </v-card>
     <Footer />
   </div>
@@ -69,22 +68,17 @@ export default {
       ],
     };
   },
-  computed: {
-    formValido() {
-      const emailValid = this.emailRules.every(rule => rule(this.email) === true);
-      const passwordValid = this.passwordRules.every(rule => rule(this.password) === true);
-      return emailValid && passwordValid;
-    }
-  },
   methods: {
     toggleShowPassword() {
       this.showPassword = !this.showPassword;
     },
-    onSubmit() {
-      if (!this.formValido) {
-        alert('Por favor, preencha ambos os campos corretamente.');
-        return;
-      }
+    async onSubmit() {
+			const { valid } = await this.$refs.form.validate();
+
+			if (!valid) {
+				alert('Por favor, preencha ambos os campos corretamente.');
+				return;
+			}
 
       const usuarios = JSON.parse(window.localStorage.getItem("users")) || [];
       const usuarioValido = usuarios.find(user => user.email === this.email && user.password === this.password);
