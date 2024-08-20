@@ -96,7 +96,7 @@ export default {
 			],
 			passwordRules: [
 				(v) => Boolean(v) || "A senha é obrigatória",
-				(v) => v.length >= 3 || "A senha deve ter pelo menos 3 caracteres",
+				(v) => v.length >= 6 || "A senha deve ter pelo menos 3 caracteres",
 				(v) =>
 					this.validatePassword(v) ||
 					"A senha deve conter um caractere especial",
