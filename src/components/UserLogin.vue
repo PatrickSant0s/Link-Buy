@@ -78,7 +78,7 @@ export default {
 		toggleShowPassword() {
 			this.showPassword = !this.showPassword;
 		},
-			async onSubmit() {
+		async onSubmit() {
 			const { valid } = await this.$refs.form.validate();
 
 			if (!valid) {
@@ -87,10 +87,10 @@ export default {
 			}
 
 			this.loading = true;
-			
+
 			const { data, error } = await supabase.auth.signInWithPassword({
 				email: this.email,
-				password: this.password
+				password: this.password,
 			});
 
 			if (error) {
@@ -110,8 +110,6 @@ export default {
 			const specialCharRegex = /[!@#\$%\^\&*\)\(+=._-]/;
 			return specialCharRegex.test(password);
 		},
-
-
 	},
 };
 </script>

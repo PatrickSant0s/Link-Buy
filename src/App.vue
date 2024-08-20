@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import { supabase } from "@/config/supabase";
+
 
 export default {
 	name: "App",
@@ -15,8 +15,6 @@ export default {
 	data: () => ({
 		//
 	}),
-	created: () => {
-		console.log(supabase);
-	},
+	
 };
 </script>
