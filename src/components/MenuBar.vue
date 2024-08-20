@@ -33,7 +33,7 @@
 					<div class="account-header">
 						<span class="account">Minha conta</span>
 					</div>
-					<div class="account-links link" >
+					<div class="account-links link">
 						<a href="" class="link" @click="goLogin">Entrar</a>
 						/
 						<a href="" class="link" @click="goRegister">Cadastrar</a>
@@ -147,7 +147,7 @@ export default {
 	.search-input {
 		width: 30%;
 	}
-	
+
 	.search-text-input {
 		padding-left: 15px;
 	}
