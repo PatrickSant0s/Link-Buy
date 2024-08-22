@@ -156,7 +156,7 @@ export default {
 					emailRedirectTo: "http://localhost:8080/",
 				},
 			});
-			console.log(data, error);
+		
 		},
 	},
 };
