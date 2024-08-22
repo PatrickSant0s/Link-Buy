@@ -1,4 +1,4 @@
-# futvolei-oficial
+# Link & Buy
 
 ## Project setup
 
