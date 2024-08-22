@@ -22,23 +22,42 @@
 				</span>
 			</div> -->
 			<div style="display: flex">
-				<div class="icon-log">
+				<div v-if="!isLoggedIn">
+					<div class="icon-log">
+						<iconify-icon
+							icon="mi:log-in"
+							width="2.5em"
+							height="2.5em"
+						></iconify-icon>
+					</div>
+					<nav class="account-nav">
+						<div class="account-header">
+							<span class="account">Minha conta</span>
+						</div>
+						<div class="account-links link">
+							<a href="" class="link" @click.prevent="goLogin">Entrar</a>
+							/
+							<a href="" class="link" @click.prevent="goRegister">Cadastrar</a>
+						</div>
+					</nav>
+				</div>
+
+				<div v-else class="icon-profile">
 					<iconify-icon
-						icon="mi:log-in"
+						icon="mdi:account-circle"
 						width="2.5em"
 						height="2.5em"
 					></iconify-icon>
+					<!-- Aqui você pode adicionar um menu dropdown, se desejar -->
+					<nav class="account-nav">
+						<div class="account-header">
+							<span class="account">Bem-vindo, {{ user?.email }}</span>
+						</div>
+						<div class="account-links link">
+							<a href="" class="link" @click.prevent="logout">Sair</a>
+						</div>
+					</nav>
 				</div>
-				<nav class="account-nav">
-					<div class="account-header">
-						<span class="account">Minha conta</span>
-					</div>
-					<div class="account-links link">
-						<a href="" class="link" @click="goLogin">Entrar</a>
-						/
-						<a href="" class="link" @click="goRegister">Cadastrar</a>
-					</div>
-				</nav>
 			</div>
 		</div>
 	</div>
@@ -46,16 +65,28 @@
 
 <script>
 import { Icon } from "@iconify/vue";
+import { supabase } from "@/config/supabase";
 
 export default {
 	name: "MenuPrincipal",
 	data() {
 		return {
 			searchQuery: "",
+			isLoggedIn: false, 
+			user: null, 
 		};
 	},
 	components: {
 		IconifyIcon: Icon,
+	},
+	async mounted() {
+		const {
+			data: { user },
+		} = await supabase.auth.getUser();
+		if (user) {
+			this.isLoggedIn = true;
+			this.user = user;
+		}
 	},
 	methods: {
 		handleSearch() {
@@ -68,6 +99,13 @@ export default {
 			this.$router.push("/register");
 		},
 		goLogin() {
+			this.$router.push("/login");
+		},
+		async logout() {
+			await supabase.auth.signOut();
+			this.isLoggedIn = false;
+			this.user = null;
+			localStorage.removeItem("token");
 			this.$router.push("/login");
 		},
 	},
