@@ -156,7 +156,14 @@ export default {
 					emailRedirectTo: "http://localhost:8080/",
 				},
 			});
-		
+			if (error) {
+				alert("Usuário não encontrado, verifique a senha ou cadastre-se");
+				this.loading = false;
+			} else {
+				localStorage.setItem("token", data.session.access_token);
+
+				this.$router.push("/");
+			}
 		},
 	},
 };
