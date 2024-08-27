@@ -1,4 +1,4 @@
-import { supabase } from "@/config/supabase"; 
+import { supabase } from "@/config/supabase";
 
 export async function isUserLoggedIn() {
 	const {
@@ -11,5 +11,5 @@ export async function isUserLoggedIn() {
 		return false;
 	}
 
-	return !!user; 
+	return !!user;
 }

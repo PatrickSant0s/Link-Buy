@@ -3,14 +3,14 @@ import HomeView from "@/views/HomeView.vue";
 import LoginView from "@/views/LoginView.vue";
 import RegisterView from "@/views/RegisterView.vue";
 import PerfilProduct from "@/components/PerfilProduct.vue";
-import { isUserLoggedIn } from "@/utils/authentication"; 
+import { isUserLoggedIn } from "@/utils/authentication";
 
 const routes = [
 	{
 		path: "/",
 		name: "home",
 		component: HomeView,
-		meta: { requiresAuth: true }, 
+		meta: { requiresAuth: true },
 	},
 	{
 		path: "/login",
@@ -40,22 +40,22 @@ router.beforeEach(async (to, from, next) => {
 
 	if (requiresAuth) {
 		if (!isAuthenticated) {
-			next({ name: "login" }); 
+			next({ name: "login" });
 		} else {
 			try {
-				const loggedIn = await isUserLoggedIn(); 
+				const loggedIn = await isUserLoggedIn();
 				if (loggedIn) {
-					next(); 
+					next();
 				} else {
-					next({ name: "login" }); 
+					next({ name: "login" });
 				}
 			} catch (error) {
 				console.error("Erro ao verificar autenticação:", error);
-				next({ name: "login" }); 
+				next({ name: "login" });
 			}
 		}
 	} else {
-		next(); 
+		next();
 	}
 });
 
