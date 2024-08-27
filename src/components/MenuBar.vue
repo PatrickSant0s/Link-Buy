@@ -51,7 +51,7 @@
 					<!-- Aqui você pode adicionar um menu dropdown, se desejar -->
 					<nav class="account-nav">
 						<div class="account-header">
-							<span class="account">Bem-vindo, {{ user?.email }}</span>
+							<span class="account">Bem-vindo, {{ userStore.email }}</span>
 						</div>
 						<div class="account-links link">
 							<a href="" class="link" @click.prevent="logout">Sair</a>
@@ -66,14 +66,15 @@
 <script>
 import { Icon } from "@iconify/vue";
 import { supabase } from "@/config/supabase";
+import { useUserStore } from "@/store/userStore";
 
 export default {
 	name: "MenuPrincipal",
 	data() {
 		return {
 			searchQuery: "",
-			isLoggedIn: false, 
-			user: null, 
+			isLoggedIn: false,
+			user: null,
 		};
 	},
 	components: {

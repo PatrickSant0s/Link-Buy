@@ -71,6 +71,7 @@
 import Footer from "./Footer.vue";
 import MenuBar from "./MenuBar.vue";
 import { supabase } from "@/config/supabase";
+import { dataUserStore } from "@/store/userStore";
 
 export default {
 	name: "UserRegister",
@@ -163,6 +164,13 @@ export default {
 				localStorage.setItem("token", data.session.access_token);
 
 				this.$router.push("/");
+
+				const userStore = dataUserStore();
+				userStore.setUser({
+					email: email,
+					token: data.session.access_token,
+					id: data.user.id,
+				});
 			}
 		},
 	},

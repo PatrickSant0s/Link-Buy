@@ -50,6 +50,7 @@
 <script>
 import Footer from "./Footer.vue";
 import { supabase } from "@/config/supabase";
+import { useUserStore } from "@/store/userStore";
 export default {
 	name: "UserLogin",
 	components: {
@@ -100,6 +101,12 @@ export default {
 				localStorage.setItem("token", data.session.access_token);
 				this.$router.push("/");
 			}
+			const userStore = useUserStore();
+			userStore.setUser({
+				email: email,
+				token: data.session.access_token,
+				id: data.user.id, // Ajuste conforme os dados disponíveis no response
+			});
 		},
 		validateEmail(email) {
 			const re =
