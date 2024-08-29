@@ -103,7 +103,15 @@ export default {
 				alert("Usuário não encontrado, verique a senha ou cadastra-se");
 				this.loading = false;
 			} else {
-				localStorage.setItem("token", data.session.access_token);
+				localStorage.setItem(
+					"token",
+					data.session.access_token,
+					"email",
+					this.email,
+					"id",
+					data.user.id,
+				);
+
 				this.$router.push("/");
 			}
 			this.setUser({
