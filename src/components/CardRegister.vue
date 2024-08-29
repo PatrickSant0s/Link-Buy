@@ -71,7 +71,8 @@
 import Footer from "./Footer.vue";
 import MenuBar from "./MenuBar.vue";
 import { supabase } from "@/config/supabase";
-import { dataUserStore } from "@/store/userStore";
+import { userStore } from "@/store/userStore";
+import { mapActions, mapState } from "pinia";
 
 export default {
 	name: "UserRegister",
@@ -108,7 +109,11 @@ export default {
 			],
 		};
 	},
+	computed: {
+		...mapState(userStore, ["getUser"]),
+	},
 	methods: {
+		...mapActions(userStore, ["setUser"]),
 		toggleShowPassword() {
 			this.showPassword = !this.showPassword;
 		},
@@ -165,9 +170,8 @@ export default {
 
 				this.$router.push("/");
 
-				const userStore = dataUserStore();
-				userStore.setUser({
-					email: email,
+				this.setUser({
+					email: this.email,
 					token: data.session.access_token,
 					id: data.user.id,
 				});

@@ -50,7 +50,8 @@
 <script>
 import Footer from "./Footer.vue";
 import { supabase } from "@/config/supabase";
-import { useUserStore } from "@/store/userStore";
+import { userStore } from "@/store/userStore";
+import { mapActions, mapState } from "pinia";
 export default {
 	name: "UserLogin",
 	components: {
@@ -75,7 +76,11 @@ export default {
 			],
 		};
 	},
+	computed: {
+		...mapState(userStore, ["getUser"]),
+	},
 	methods: {
+		...mapActions(userStore, ["setUser"]),
 		toggleShowPassword() {
 			this.showPassword = !this.showPassword;
 		},
@@ -101,11 +106,10 @@ export default {
 				localStorage.setItem("token", data.session.access_token);
 				this.$router.push("/");
 			}
-			const userStore = useUserStore();
-			userStore.setUser({
-				email: email,
+			this.setUser({
+				email: this.email,
 				token: data.session.access_token,
-				id: data.user.id, // Ajuste conforme os dados disponíveis no response
+				id: data.user.id,
 			});
 		},
 		validateEmail(email) {
