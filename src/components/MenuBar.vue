@@ -32,7 +32,7 @@
 					</div>
 					<nav class="account-nav">
 						<div class="account-header">
-							<span class="account">Minha conta</span>
+							<span class="account">Acesse sua conta</span>
 						</div>
 						<div class="account-links link">
 							<a href="" class="link" @click.prevent="goLogin">Entrar</a>
@@ -51,10 +51,10 @@
 					<!-- Aqui você pode adicionar um menu dropdown, se desejar -->
 					<nav class="account-nav">
 						<div class="account-header">
-							<span class="account">Bem-vindo</span>
+							<span class="account">Bem-vindo, {{ user.email }}</span>
 						</div>
 						<div class="account-links link">
-							<a href="" class="link" @click.prevent="logout">Sair</a>
+							<a href="" class="link" @click.prevent="handleLogout">Sair</a>
 						</div>
 					</nav>
 				</div>
@@ -66,30 +66,27 @@
 <script>
 import { Icon } from "@iconify/vue";
 import { supabase } from "@/config/supabase";
-import { useUserStore } from "@/store/userStore";
+import { userStore } from "@/store/userStore";
+import { mapActions, mapState } from "pinia";
 
 export default {
 	name: "MenuPrincipal",
-	data() {
-		return {
-			searchQuery: "",
-			isLoggedIn: false,
-			user: null,
-		};
-	},
 	components: {
 		IconifyIcon: Icon,
 	},
-	async mounted() {
-		const {
-			data: { user },
-		} = await supabase.auth.getUser();
-		if (user) {
-			this.isLoggedIn = true;
-			this.user = user;
+	data() {
+		return {
+			searchQuery: "",
+		};
+	},
+	computed: {
+		...mapState(userStore, ["user"]),
+		isLoggedIn() {
+			return Boolean(this.user.token);
 		}
 	},
 	methods: {
+		...mapActions(userStore, [ "logout"]),
 		handleSearch() {
 			console.log("Pesquisando por:", this.searchQuery);
 		},
@@ -102,11 +99,9 @@ export default {
 		goLogin() {
 			this.$router.push("/login");
 		},
-		async logout() {
+		async handleLogout() {
 			await supabase.auth.signOut();
-			this.isLoggedIn = false;
-			this.user = null;
-			localStorage.removeItem("token");
+			this.logout();
 			this.$router.push("/login");
 		},
 	},

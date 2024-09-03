@@ -110,10 +110,10 @@ export default {
 		};
 	},
 	computed: {
-		...mapState(userStore, ["getUser"]),
+		...mapState(userStore, ["user"]),
 	},
 	methods: {
-		...mapActions(userStore, ["setUser"]),
+		...mapActions(userStore, ["login"]),
 		toggleShowPassword() {
 			this.showPassword = !this.showPassword;
 		},
@@ -162,20 +162,20 @@ export default {
 					emailRedirectTo: "http://localhost:8080/",
 				},
 			});
+			
 			if (error) {
 				alert("Usuário não encontrado, verifique a senha ou cadastre-se");
 				this.loading = false;
-			} else {
-				localStorage.setItem("token", data.session.access_token);
-
-				this.$router.push("/");
-
-				this.setUser({
+				return;
+			}
+				this.login({
 					email: this.email,
 					token: data.session.access_token,
 					id: data.user.id,
 				});
-			}
+
+				this.$router.push("/");
+			
 		},
 	},
 };
