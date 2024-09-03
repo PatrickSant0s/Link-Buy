@@ -14,8 +14,13 @@ export const userStore = defineStore("user", {
 	// como vai recuperar os valores
 	getters: {
 		user() {
-			return { email: this.email, token: this.token, id: this.id, username: this.username };
-		}
+			return {
+				email: this.email,
+				token: this.token,
+				id: this.id,
+				username: this.username,
+			};
+		},
 	},
 	// como vc vai alterar o valor
 	actions: {
@@ -36,6 +41,6 @@ export const userStore = defineStore("user", {
 			this.token = null;
 			this.id = null;
 			this.username = null;
-		}
+		},
 	},
 });
