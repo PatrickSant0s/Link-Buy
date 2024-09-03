@@ -6,7 +6,7 @@ export const userStore = defineStore("user", {
 		const savedUser = localStorage.getItem("user");
 
 		if (!savedUser) {
-			return { token: null, email: null, id: null };
+			return { token: null, email: null, id: null, username: null };
 		}
 
 		return JSON.parse(savedUser);
@@ -14,7 +14,7 @@ export const userStore = defineStore("user", {
 	// como vai recuperar os valores
 	getters: {
 		user() {
-			return { email: this.email, token: this.token, id: this.id };
+			return { email: this.email, token: this.token, id: this.id, username: this.username };
 		}
 	},
 	// como vc vai alterar o valor
@@ -26,6 +26,7 @@ export const userStore = defineStore("user", {
 			this.email = user.email;
 			this.token = user.token;
 			this.id = user.id;
+			this.username = user.username;
 		},
 		logout() {
 			localStorage.removeItem("token");
@@ -34,6 +35,7 @@ export const userStore = defineStore("user", {
 			this.email = null;
 			this.token = null;
 			this.id = null;
+			this.username = null;
 		}
 	},
 });
