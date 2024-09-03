@@ -109,6 +109,7 @@ export default {
 				email: this.email,
 				token: data.session.access_token,
 				id: data.user.id,
+				username: data.user.user_metadata.username
 			});
 
 			this.$router.push("/");

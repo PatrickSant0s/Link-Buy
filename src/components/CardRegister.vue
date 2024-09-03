@@ -152,17 +152,25 @@ export default {
 				status: "Cadastrado",
 			};
 
-			this.signUpNewUser(email, password);
+			this.signUpNewUser(email, password, username);
 		},
-		async signUpNewUser(email, password) {
+		async signUpNewUser(email, password, username) {
 			const { data, error } = await supabase.auth.signUp({
 				email: email,
 				password: password,
+
 				options: {
+					data: {
+						username: username
+					},
+					
 					emailRedirectTo: "http://localhost:8080/",
+
 				},
+				
 			});
-			
+			console.log(data.user)
+		
 			if (error) {
 				alert("Usuário não encontrado, verifique a senha ou cadastre-se");
 				this.loading = false;
@@ -172,6 +180,7 @@ export default {
 					email: this.email,
 					token: data.session.access_token,
 					id: data.user.id,
+					username: data.user.user_metadata.username,
 				});
 
 				this.$router.push("/");
