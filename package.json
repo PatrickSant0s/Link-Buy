@@ -5,7 +5,8 @@
 	"scripts": {
 		"serve": "vue-cli-service serve",
 		"build": "vue-cli-service build",
-		"format": "prettier --write ."
+		"format": "prettier --write .",
+		"lint": "eslint --fix"
 	},
 	"dependencies": {
 		"@iconify/icons-fe": "^1.2.5",
@@ -25,6 +26,8 @@
 		"@vue/cli-plugin-babel": "~5.0.0",
 		"@vue/cli-plugin-router": "~5.0.0",
 		"@vue/cli-service": "~5.0.0",
+		"eslint": "^9.9.1",
+		"eslint-plugin-vue": "^9.28.0",
 		"prettier": "^3.3.2",
 		"vue-cli-plugin-vuetify": "~2.5.8",
 		"webpack-plugin-vuetify": "^2.0.0-alpha.0"
