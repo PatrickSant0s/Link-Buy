@@ -22,23 +22,42 @@
 				</span>
 			</div> -->
 			<div style="display: flex">
-				<div class="icon-log">
+				<div v-if="!isLoggedIn">
+					<div class="icon-log">
+						<iconify-icon
+							icon="mi:log-in"
+							width="2.5em"
+							height="2.5em"
+						></iconify-icon>
+					</div>
+					<nav class="account-nav">
+						<div class="account-header">
+							<span class="account">Acesse sua conta</span>
+						</div>
+						<div class="account-links link">
+							<a href="" class="link" @click.prevent="goLogin">Entrar</a>
+							/
+							<a href="" class="link" @click.prevent="goRegister">Cadastrar</a>
+						</div>
+					</nav>
+				</div>
+
+				<div v-else class="icon-profile">
 					<iconify-icon
-						icon="mi:log-in"
+						icon="mdi:account-circle"
 						width="2.5em"
 						height="2.5em"
 					></iconify-icon>
+					<!-- Aqui você pode adicionar um menu dropdown, se desejar -->
+					<nav class="account-nav">
+						<div class="account-header">
+							<span class="account">Bem-vindo, {{ user.email }}</span>
+						</div>
+						<div class="account-links link">
+							<a href="" class="link" @click.prevent="handleLogout">Sair</a>
+						</div>
+					</nav>
 				</div>
-				<nav class="account-nav">
-					<div class="account-header">
-						<span class="account">Minha conta</span>
-					</div>
-					<div class="account-links link" >
-						<a href="" class="link" @click="goLogin">Entrar</a>
-						/
-						<a href="" class="link" @click="goRegister">Cadastrar</a>
-					</div>
-				</nav>
 			</div>
 		</div>
 	</div>
@@ -46,18 +65,28 @@
 
 <script>
 import { Icon } from "@iconify/vue";
+import { supabase } from "@/config/supabase";
+import { userStore } from "@/store/userStore";
+import { mapActions, mapState } from "pinia";
 
 export default {
 	name: "MenuPrincipal",
+	components: {
+		IconifyIcon: Icon,
+	},
 	data() {
 		return {
 			searchQuery: "",
 		};
 	},
-	components: {
-		IconifyIcon: Icon,
+	computed: {
+		...mapState(userStore, ["user"]),
+		isLoggedIn() {
+			return Boolean(this.user.token);
+		}
 	},
 	methods: {
+		...mapActions(userStore, [ "logout"]),
 		handleSearch() {
 			console.log("Pesquisando por:", this.searchQuery);
 		},
@@ -68,6 +97,11 @@ export default {
 			this.$router.push("/register");
 		},
 		goLogin() {
+			this.$router.push("/login");
+		},
+		async handleLogout() {
+			await supabase.auth.signOut();
+			this.logout();
 			this.$router.push("/login");
 		},
 	},
@@ -147,7 +181,7 @@ export default {
 	.search-input {
 		width: 30%;
 	}
-	
+
 	.search-text-input {
 		padding-left: 15px;
 	}

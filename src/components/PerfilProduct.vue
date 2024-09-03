@@ -89,9 +89,8 @@
 				</v-row>
 			</div>
 		</v-card>
-		
 	</div>
-	<Footer/>
+	<Footer />
 </template>
 
 <script>
@@ -100,7 +99,7 @@ import { produtos } from "@/utils/CardContext";
 import StarRating from "vue-star-rating";
 import MenuBar from "./MenuBar.vue";
 import { Icon } from "@iconify/vue";
-import Footer from "@/components/Footer.vue"
+import Footer from "@/components/Footer.vue";
 
 export default {
 	name: "PerfilProduct",
