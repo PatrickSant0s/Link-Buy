@@ -3,7 +3,7 @@
 		<v-card
 			class="mx-auto mt-10 mb-10 custom-scope"
 			max-width="400"
-			title="Novo Cliente"
+			title="Entrar"
 		>
 			<v-form ref="form" validate-on="input">
 				<v-text-field
