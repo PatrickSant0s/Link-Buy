@@ -26,26 +26,35 @@
 				<span class="title-edit">Atualizar Cadastro</span>
 			</v-card-title>
 
-			<v-container>
+			<v-form ref="form" validate-on="input">
 				<v-text-field
-					v-model="first"
-					label="First name"
+					name="username"
+					label="Username"
 					variant="underlined"
+					:rules="usernameRules"
 				></v-text-field>
 
 				<v-text-field
-					v-model="email"
+					name="email"
+					color="primary"
 					label="Email"
 					variant="underlined"
+					:rules="emailRules"
 				></v-text-field>
 
 				<v-text-field
+					name="password"
 					v-model="password"
-					label="Password"
+					:type="showPassword ? 'text' : 'password'"
+					color="primary"
+					label="Senha"
 					placeholder="Enter your password"
 					variant="underlined"
+					:append-icon="showPassword ? 'mdi-eye-off' : 'mdi-eye'"
+					:rules="passwordRules"
+					@click:append="toggleShowPassword"
 				></v-text-field>
-			</v-container>
+			</v-form>
 
 			<v-divider></v-divider>
 
@@ -57,7 +66,6 @@
 				<v-btn color="success" @click="dialog = false">
 					<span style="color: #ffd200"
 						>Confirmar
-						<v-icon icon="mdi-chevron-right" end></v-icon>
 					</span>
 				</v-btn>
 			</v-card-actions>
@@ -76,6 +84,22 @@ export default {
 			first: "",
 			email: "",
 			password: "",
+			usernameRules: [
+				(v) => Boolean(v) || "O nome de usuário é obrigatório",
+				(v) =>
+					v.length >= 3 || "O nome de usuário deve ter pelo menos 3 caracteres",
+			],
+			emailRules: [
+				(v) => Boolean(v) || "E-mail é obrigatório",
+				(v) => this.validateEmail(v) || "E-mail deve ser válido",
+			],
+			passwordRules: [
+				(v) => Boolean(v) || "A senha é obrigatória",
+				(v) => v.length >= 6 || "A senha deve ter pelo menos 3 caracteres",
+				(v) =>
+					this.validatePassword(v) ||
+					"A senha deve conter um caractere especial",
+			],
 		};
 	},
 	computed: {
@@ -84,6 +108,15 @@ export default {
 	methods: {
 		goToHome() {
 			this.$router.push("/");
+		},
+		validateEmail(email) {
+			const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+			return emailRegex.test(email);
+		},
+		validatePassword(password) {
+			const passwordRegex = /[!@#$%^&*(),.?":{}|<>]/;
+
+			return passwordRegex.test(password);
 		},
 	},
 };
