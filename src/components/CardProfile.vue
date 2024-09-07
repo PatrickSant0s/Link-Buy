@@ -10,8 +10,10 @@
 			<v-avatar color="black" size="70" class="mb-3 icon-profile">
 				<img src="" alt="" />
 			</v-avatar>
+
 			<span class="username">{{ user.username }}</span>
 			<span class="email">{{ user.email }}</span>
+			<input type="file" class="input-file" @change="uploadImage" />
 		</div>
 		<v-card-actions class="button">
 			<v-btn variant="tonal" @click="dialog = true">Editar</v-btn>
@@ -64,9 +66,7 @@
 					<span style="color: #ffd200">Cancelar </span>
 				</v-btn>
 				<v-btn color="success" @click="dialog = false">
-					<span style="color: #ffd200"
-						>Confirmar
-					</span>
+					<span style="color: #ffd200">Confirmar </span>
 				</v-btn>
 			</v-card-actions>
 		</v-card>
@@ -76,6 +76,7 @@
 <script>
 import { userStore } from "@/store/userStore";
 import { mapState } from "pinia";
+import { uuid } from "vue-uuid";
 
 export default {
 	data() {
@@ -85,17 +86,12 @@ export default {
 			email: "",
 			password: "",
 			usernameRules: [
-				(v) => Boolean(v) || "O nome de usuário é obrigatório",
 				(v) =>
-					v.length >= 3 || "O nome de usuário deve ter pelo menos 3 caracteres",
+					(v && v.length >= 3) || "O username deve contar 3 ou mais caracteres",
 			],
-			emailRules: [
-				(v) => Boolean(v) || "E-mail é obrigatório",
-				(v) => this.validateEmail(v) || "E-mail deve ser válido",
-			],
+			emailRules: [(v) => this.validateEmail(v) || "E-mail deve ser válido"],
 			passwordRules: [
-				(v) => Boolean(v) || "A senha é obrigatória",
-				(v) => v.length >= 6 || "A senha deve ter pelo menos 3 caracteres",
+				(v) => v.length >= 6 || "A senha deve ter pelo menos 6 caracteres",
 				(v) =>
 					this.validatePassword(v) ||
 					"A senha deve conter um caractere especial",
@@ -117,6 +113,16 @@ export default {
 			const passwordRegex = /[!@#$%^&*(),.?":{}|<>]/;
 
 			return passwordRegex.test(password);
+		},
+		async uploadImage(event) {
+			console.log(event.target);
+			const avatarFile = event.target.files[0];
+			const newID = uuid.v4();
+			console.log(avatarFile);
+			console.log("public/newID.png");
+			const { data, error } = await supabase.storage
+				.from("user-profile-image")
+				.upload(`public/${newID}.png`, avatarFile);
 		},
 	},
 };
@@ -156,5 +162,13 @@ export default {
 
 .title-edit {
 	color: #ffd200;
+}
+.input-file {
+	font-size: 12px;
+	position: absolute;
+	top: 52%;
+	left: 5px;
+	font-weight: 600;
+	margin-top: 12px;
 }
 </style>
