@@ -16,7 +16,7 @@
 				<v-text-field
 					name="username"
 					label="Username"
-					variant="underlined"
+					variant="filled"
 					:rules="usernameRules"
 				></v-text-field>
 
@@ -24,7 +24,7 @@
 					name="email"
 					color="primary"
 					label="Email"
-					variant="underlined"
+					variant="filled"
 					:rules="emailRules"
 				></v-text-field>
 
@@ -35,7 +35,7 @@
 					color="primary"
 					label="Senha"
 					placeholder="Enter your password"
-					variant="underlined"
+					variant="filled"
 					:append-icon="showPassword ? 'mdi-eye-off' : 'mdi-eye'"
 					:rules="passwordRules"
 					@click:append="toggleShowPassword"
@@ -47,7 +47,7 @@
 					color="primary"
 					label="Confirmar Senha"
 					placeholder="Enter your password"
-					variant="underlined"
+					variant="filled"
 					:append-icon="showConfirmPassword ? 'mdi-eye-off' : 'mdi-eye'"
 					:rules="confirmPasswordRules"
 					@click:append="toggleShowConfirmPassword"
