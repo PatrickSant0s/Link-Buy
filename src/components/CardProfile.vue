@@ -35,15 +35,6 @@
 					variant="filled"
 					:rules="usernameRules"
 				></v-text-field>
-
-				<v-text-field
-					name="email"
-					color="primary"
-					label="Email"
-					variant="filled"
-					:rules="emailRules"
-				></v-text-field>
-
 				<v-text-field
 					name="password"
 					v-model="password"
@@ -65,7 +56,7 @@
 				<v-btn color="success" @click="dialog = false">
 					<span style="color: #ffd200">Cancelar </span>
 				</v-btn>
-				<v-btn color="success" @click="dialog = false">
+				<v-btn color="success" @click="updatePassword">
 					<span style="color: #ffd200">Confirmar </span>
 				</v-btn>
 			</v-card-actions>
@@ -77,6 +68,7 @@
 import { userStore } from "@/store/userStore";
 import { mapState } from "pinia";
 import { uuid } from "vue-uuid";
+import { supabase } from "@/config/supabase";
 
 export default {
 	data() {
@@ -85,6 +77,7 @@ export default {
 			first: "",
 			email: "",
 			password: "",
+			showPassword: false,
 			usernameRules: [
 				(v) =>
 					(v && v.length >= 3) || "O username deve contar 3 ou mais caracteres",
@@ -115,7 +108,6 @@ export default {
 			return passwordRegex.test(password);
 		},
 		async uploadImage(event) {
-			console.log(event.target);
 			const avatarFile = event.target.files[0];
 			const newID = uuid.v4();
 			console.log(avatarFile);
@@ -123,7 +115,26 @@ export default {
 			const { data, error } = await supabase.storage
 				.from("user-profile-image")
 				.upload(`public/${newID}.png`, avatarFile);
+			console.log(data, error);
 		},
+
+		async updateImage() {
+			const { error } = await supabase.auth.updateUser({
+				data: {},
+			});
+		},
+		// async updatePassword(password) {
+		// 	const { error } = await supabase.auth.updateUser({
+		// 		password: new_password,
+		// 	});
+
+		// 	if (error) {
+		// 		console.log("Erro ao atualizar a senha", error.message);
+		// 	} else {
+		// 		console.log("Senha atualizada com sucesso");
+		// 		this.dialog = false;
+		// 	}
+		// },
 	},
 };
 </script>
