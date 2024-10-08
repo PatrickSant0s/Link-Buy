@@ -3,9 +3,6 @@
 		<MenuBar />
 
 		<div class="d-flex justify-center">
-			<!-- Filtro lateral -->
-
-			<!-- Conteúdo principal -->
 			<div class="content">
 				<h1 class="title">Lançamentos</h1>
 				<CardProduto />
@@ -25,6 +22,7 @@ import CardProduto from "@/components/CardProduto.vue";
 import FilterProduct from "@/components/FilterProduct.vue";
 import CarrouselEventos from "@/components/CarrouselEventos.vue";
 import Footer from "@/components/Footer.vue";
+import CardRegisterProduct from "@/components/CardRegisterProduct.vue";
 
 export default {
 	name: "HomeView",
@@ -33,6 +31,7 @@ export default {
 		CardProduto,
 		FilterProduct,
 		CarrouselEventos,
+		CardRegisterProduct,
 		Footer,
 	},
 };

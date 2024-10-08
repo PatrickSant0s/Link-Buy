@@ -122,6 +122,7 @@ export default {
 		};
 	},
 	methods: {
+		
 		verProduto(produto) {
 			this.product = produto; // Atualiza o produto selecionado
 		},
