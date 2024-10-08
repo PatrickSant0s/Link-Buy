@@ -1,32 +1,24 @@
 <template>
 	<div class="title d-flex justify-center">
 		<v-row class="mt-10">
-			<v-col
-				v-for="(produto, index) in produtos"
-				:key="produto.id"
-				cols="12"
-				md="4"
-			>
+			<v-col cols="12" md="4">
 				<v-card
 					class="mx-auto mb-3"
 					max-width="400"
 					height="auto"
 					color="#0d0d0d"
-					style=""
 				>
-					<v-img height="auto" :src="produto.imagem"></v-img>
+					<v-img height="auto" :src="product_image"></v-img>
 
 					<div class="d-flex flex-column">
-						<span class="name mx-auto pt-4">{{ produto.nome }}</span>
-						<span class="sub-title">{{ produto.preco }}</span>
+						<span class="name mx-auto pt-4">{{ product_name }}</span>
+						<span class="sub-title">{{ product_description }}</span>
 					</div>
 
-					<div class="portion">
-						{{ produto.portions }}
-					</div>
+					<div class="portion">{{}}</div>
 
 					<div class="pa-5">
-						<button class="custom-button" @click="irParaPerfil(produto.id)">
+						<button class="custom-button" @click="goToProduct">
 							Ver produto
 						</button>
 					</div>
@@ -37,19 +29,47 @@
 </template>
 
 <script>
-import { produtos } from "@/utils/CardContext";
 import { Icon } from "@iconify/vue";
+import { uuid } from "vue-uuid";
+import { supabase } from "@/config/supabase";
+import { products } from "@/utils/PerfilProduct";
+
 export default {
 	data() {
 		return {
-			produtos: produtos,
+			product_image: "",
+			product_name: "",
+			product_description: "",
+			product_link: "",
 		};
 	},
+	async created() {
+		try {
+			const {
+				data: { user },
+				error,
+			} = await supabase.auth.getUser();
+			if (error || !user) {
+				console.error("Não foi possível obter os dados do usuário.");
+				return;
+			}
+			console.log("User Metadata:", user.user_metadata);
+
+			this.product_image = user.user_metadata?.product_image || "";
+			this.product_name = user.user_metadata?.product_name || "";
+			this.product_description = user.user_metadata?.product_description || "";
+			this;
+			this.product_link = user.user_metadata?.product_link || "";
+		} catch (err) {
+			console.error("Erro ao obter dados do usuário:", err);
+		}
+	},
 	methods: {
-		irParaPerfil(id) {
-			const routeName = this.$route.name;
-			if (routeName !== "PerfilProduct" || this.$route.params.id !== id) {
-				this.$router.push(`/Produto/${id}`);
+		goToProduct() {
+			if (this.product_link) {
+				window.location.href = this.product_link;
+			} else {
+				console.error("Link do produto não disponível ");
 			}
 		},
 	},
