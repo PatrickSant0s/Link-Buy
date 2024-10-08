@@ -67,7 +67,7 @@ export default {
 	methods: {
 		goToProduct() {
 			if (this.product_link) {
-				window.location.href = this.product_link;
+			  window.open(this.product_link, '_blank', 'noopener,noreferrer');
 			} else {
 				console.error("Link do produto não disponível ");
 			}
