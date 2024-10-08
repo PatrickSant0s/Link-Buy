@@ -8,7 +8,7 @@
 		></v-img>
 		<div class="d-flex flex-column">
 			<v-avatar color="black" size="70" class="mb-3 icon-profile">
-				<img src="" alt="" />
+				<img :src="avatarUrl" alt="User Profile" width="100%" height="100%" />
 			</v-avatar>
 
 			<span class="username">{{ user.username }}</span>
@@ -77,6 +77,7 @@ export default {
 			first: "",
 			email: "",
 			password: "",
+			avatarUrl: "",
 			showPassword: false,
 			usernameRules: [
 				(v) =>
@@ -90,6 +91,11 @@ export default {
 					"A senha deve conter um caractere especial",
 			],
 		};
+	},
+	async created() {
+		const { data: user } = await supabase.auth.getUser();
+		this.avatarUrl = user.user_metadata?.avatar_url;
+		console.log("Avatar URL:", this.avatarUrl); // Adicione esta linha
 	},
 	computed: {
 		...mapState(userStore, ["user"]),
@@ -110,31 +116,39 @@ export default {
 		async uploadImage(event) {
 			const avatarFile = event.target.files[0];
 			const newID = uuid.v4();
-			console.log(avatarFile);
-			console.log("public/newID.png");
+			const filePath = `public/${newID}.png`;
+
 			const { data, error } = await supabase.storage
 				.from("user-profile-image")
-				.upload(`public/${newID}.png`, avatarFile);
-			console.log(data, error);
-		},
+				.upload(filePath, avatarFile);
 
-		async updateImage() {
+			if (error) {
+				console.error("Erro ao fazer upload da imagem:", error);
+				return;
+			}
+
+			console.log("Imagem enviada com sucesso:", data);
+
+			const { data: avatar_url } = supabase.storage
+				.from("user-profile-image")
+				.getPublicUrl(filePath, {});
+			await this.updateImage(avatar_url.publicUrl);
+			console.log(avatar_url);
+		},
+		async updateImage(imageURL) {
 			const { error } = await supabase.auth.updateUser({
-				data: {},
+				data: {
+					avatar_url: imageURL,
+				},
 			});
-		},
-		// async updatePassword(password) {
-		// 	const { error } = await supabase.auth.updateUser({
-		// 		password: new_password,
-		// 	});
+			if (error) {
+				console.error("Erro ao atualizar o usuário:", error);
+				return;
+			}
 
-		// 	if (error) {
-		// 		console.log("Erro ao atualizar a senha", error.message);
-		// 	} else {
-		// 		console.log("Senha atualizada com sucesso");
-		// 		this.dialog = false;
-		// 	}
-		// },
+			console.log("Imagem do perfil atualizada com sucesso");
+			this.avatarUrl = imageURL;
+		},
 	},
 };
 </script>
