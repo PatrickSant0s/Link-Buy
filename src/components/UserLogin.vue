@@ -3,7 +3,7 @@
 		<v-card
 			class="mx-auto mt-10 mb-10 custom-scope"
 			max-width="400"
-			title="Novo Cliente"
+			title="Entrar"
 		>
 			<v-form ref="form" validate-on="input">
 				<v-text-field
@@ -11,8 +11,9 @@
 					v-model="email"
 					color="primary"
 					label="Email"
-					variant="underlined"
+					variant="filled"
 					:rules="emailRules"
+					
 				></v-text-field>
 
 				<v-text-field
@@ -22,7 +23,7 @@
 					color="primary"
 					label="Senha"
 					placeholder="Digite sua senha"
-					variant="underlined"
+						variant="filled"
 					:append-icon="showPassword ? 'mdi-eye-off' : 'mdi-eye'"
 					:rules="passwordRules"
 					@click:append="toggleShowPassword"

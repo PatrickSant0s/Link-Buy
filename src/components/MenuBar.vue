@@ -47,6 +47,9 @@
 						icon="mdi:account-circle"
 						width="2.5em"
 						height="2.5em"
+						@click.prevent="goProfile"
+						cursor="pointer"
+						color="#ffd200"
 					></iconify-icon>
 					<!-- Aqui você pode adicionar um menu dropdown, se desejar -->
 					<nav class="account-nav">
@@ -99,6 +102,9 @@ export default {
 		goLogin() {
 			this.$router.push("/login");
 		},
+		goProfile() {
+			this.$router.push("/Profile");
+		},
 		async handleLogout() {
 			await supabase.auth.signOut();
 			this.logout();
@@ -122,7 +128,7 @@ export default {
 	box-sizing: border-box;
 }
 .account {
-	color: #d1d1d1;
+	color: #ffd200;
 	font-size: 0.875em;
 	font-weight: 500;
 }
@@ -135,6 +141,7 @@ export default {
 	display: flex;
 	flex-direction: column;
 	align-items: start;
+	color: #ffd200;
 }
 
 .account-links {
@@ -146,7 +153,7 @@ export default {
 	font-size: 0.81rem;
 	transition: ease-out 0.2s;
 	line-height: 15px;
-	color: #bdbdbd;
+	color: #ffd200;
 }
 
 .search-text-input {
