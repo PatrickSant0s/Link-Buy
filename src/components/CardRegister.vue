@@ -161,30 +161,27 @@ export default {
 
 				options: {
 					data: {
-						username: username
+						username: username,
 					},
-					
-					emailRedirectTo: "http://localhost:8080/",
 
+					emailRedirectTo: "http://localhost:8080/",
 				},
-				
 			});
-			console.log(data.user)
-		
+			console.log(data.user);
+
 			if (error) {
 				alert("Usuário não encontrado, verifique a senha ou cadastre-se");
 				this.loading = false;
 				return;
 			}
-				this.login({
-					email: this.email,
-					token: data.session.access_token,
-					id: data.user.id,
-					username: data.user.user_metadata.username,
-				});
+			this.login({
+				email: this.email,
+				token: data.session.access_token,
+				id: data.user.id,
+				username: data.user.user_metadata.username,
+			});
 
-				this.$router.push("/");
-			
+			this.$router.push("/");
 		},
 	},
 };

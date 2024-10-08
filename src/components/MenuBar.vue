@@ -83,10 +83,10 @@ export default {
 		...mapState(userStore, ["user"]),
 		isLoggedIn() {
 			return Boolean(this.user.token);
-		}
+		},
 	},
 	methods: {
-		...mapActions(userStore, [ "logout"]),
+		...mapActions(userStore, ["logout"]),
 		handleSearch() {
 			console.log("Pesquisando por:", this.searchQuery);
 		},
