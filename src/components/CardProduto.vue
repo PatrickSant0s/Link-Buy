@@ -1,6 +1,7 @@
 <template>
 	<div class="title d-flex justify-center">
 		<v-row class="mt-10">
+			
 			<v-col cols="12" md="4">
 				<v-card
 					class="mx-auto mb-3"
@@ -67,7 +68,7 @@ export default {
 	methods: {
 		goToProduct() {
 			if (this.product_link) {
-			  window.open(this.product_link, '_blank', 'noopener,noreferrer');
+				window.open(this.product_link, "_blank", "noopener,noreferrer");
 			} else {
 				console.error("Link do produto não disponível ");
 			}
@@ -112,6 +113,10 @@ export default {
 	color: #000000;
 	background-color: #ffd200;
 	transition: ease-out 0.2s;
+}
+
+.button-register {
+	align-content: center;
 }
 .name {
 	color: #ebebeb;
