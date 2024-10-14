@@ -33,7 +33,7 @@
 import { Icon } from "@iconify/vue";
 import { uuid } from "vue-uuid";
 import { supabase } from "@/config/supabase";
-import { products } from "@/utils/PerfilProduct";
+
 
 export default {
 	data() {
