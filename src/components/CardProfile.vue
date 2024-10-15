@@ -1,12 +1,6 @@
 <template>
-	<v-card class="mx-auto card-profile mt-10" max-width="800" height="380px">
-		<v-img
-			height="150px"
-			whidth="200px"
-			src="https://cdn.vuetifyjs.com/images/cards/sunshine.jpg"
-			cover
-		></v-img>
-		<div class="d-flex flex-column">
+	<v-card class="card-profile" max-width="800" height="380px">
+		<div class="content-card">
 			<v-avatar color="black" size="70" class="mb-3 icon-profile">
 				<img :src="avatarUrl" alt="User Profile" width="100%" height="100%" />
 			</v-avatar>
@@ -77,7 +71,7 @@ export default {
 			first: "",
 			email: "",
 			password: "",
-			avatarUrl: "",
+			avatarUrl: "", // Inicializa o avatarUrl
 			showPassword: false,
 			usernameRules: [
 				(v) =>
@@ -94,8 +88,15 @@ export default {
 	},
 	async created() {
 		const { data: user } = await supabase.auth.getUser();
-		this.avatarUrl = user.user_metadata?.avatar_url;
-		console.log("Avatar URL:", this.avatarUrl); // Adicione esta linha
+
+		// Tenta carregar a URL do avatar do localStorage
+		const savedUser = JSON.parse(localStorage.getItem("user"));
+		if (savedUser && savedUser.avatarUrl) {
+			this.avatarUrl = savedUser.avatarUrl; // Carrega do localStorage
+		} else if (user && user.user_metadata) {
+			this.avatarUrl = user.user_metadata.avatar_url; // Carrega do Supabase
+		}
+		console.log("Avatar URL:", this.avatarUrl);
 	},
 	computed: {
 		...mapState(userStore, ["user"]),
@@ -136,6 +137,7 @@ export default {
 			console.log(avatar_url);
 		},
 		async updateImage(imageURL) {
+			// Atualiza a imagem do usuário no Supabase
 			const { error } = await supabase.auth.updateUser({
 				data: {
 					avatar_url: imageURL,
@@ -147,7 +149,16 @@ export default {
 			}
 
 			console.log("Imagem do perfil atualizada com sucesso");
+
+			// Atualiza o avatar no Pinia store
 			this.avatarUrl = imageURL;
+
+			// Atualiza o usuário salvo no localStorage
+			const savedUser = JSON.parse(localStorage.getItem("user"));
+			if (savedUser) {
+				savedUser.avatarUrl = imageURL;
+				localStorage.setItem("user", JSON.stringify(savedUser));
+			}
 		},
 	},
 };
@@ -156,18 +167,24 @@ export default {
 <style scoped>
 .card-profile {
 	background-color: white;
+	top: 100px;
+	margin: auto;
+	width: 100vh;
+}
+
+.content-card {
 }
 .icon-profile {
 	position: absolute;
 	top: 24%;
-	left: 6%;
+	left: 45%;
 }
 
 .username {
 	font-size: 12px;
 	position: absolute;
 	top: 40%;
-	left: 60px;
+	left: 46%;
 	font-weight: 900;
 	margin-top: 12px;
 }
@@ -175,7 +192,7 @@ export default {
 	font-size: 12px;
 	position: absolute;
 	top: 45%;
-	left: 5px;
+	left: 37%;
 	font-weight: 600;
 	margin-top: 12px;
 }
@@ -183,6 +200,7 @@ export default {
 .button {
 	position: absolute;
 	top: 80%;
+	left: 40%;
 }
 
 .title-edit {
@@ -191,9 +209,10 @@ export default {
 .input-file {
 	font-size: 12px;
 	position: absolute;
-	top: 52%;
-	left: 5px;
-	font-weight: 600;
+	top: 30%;
+	left: 55%;
+	font-weight: 400;
 	margin-top: 12px;
+	width:110px;
 }
 </style>

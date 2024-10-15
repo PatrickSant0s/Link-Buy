@@ -43,14 +43,16 @@
 				</div>
 
 				<div v-else class="icon-profile">
-					<iconify-icon
-						icon="mdi:account-circle"
-						width="2.5em"
-						height="2.5em"
-						@click.prevent="goProfile"
-						cursor="pointer"
-						color="#ffd200"
-					></iconify-icon>
+					<v-avatar color="black" size="70" class="mb-3 icon-profile">
+						<img
+							:src="avatarUrl"
+							alt="User Profile"
+							width="100%"
+							height="100%"
+							@click.prevent="goProfile"
+							:style="{ cursor: 'pointer' }"
+						/>
+					</v-avatar>
 					<!-- Aqui você pode adicionar um menu dropdown, se desejar -->
 					<nav class="account-nav">
 						<div class="account-header">
@@ -80,7 +82,20 @@ export default {
 	data() {
 		return {
 			searchQuery: "",
+			avatarUrl: "", // Inicializa o avatarUrl
 		};
+	},
+	async created() {
+		const { data: user } = await supabase.auth.getUser();
+
+		// Tenta carregar a URL do avatar do localStorage
+		const savedUser = JSON.parse(localStorage.getItem("user"));
+		if (savedUser && savedUser.avatarUrl) {
+			this.avatarUrl = savedUser.avatarUrl; // Carrega do localStorage
+		} else if (user && user.user_metadata) {
+			this.avatarUrl = user.user_metadata.avatar_url; // Carrega do Supabase
+		}
+		console.log("Avatar URL:", this.avatarUrl);
 	},
 	computed: {
 		...mapState(userStore, ["user"]),
