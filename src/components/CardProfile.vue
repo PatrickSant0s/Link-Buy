@@ -213,6 +213,6 @@ export default {
 	left: 55%;
 	font-weight: 400;
 	margin-top: 12px;
-	width:110px;
+	width: 110px;
 }
 </style>

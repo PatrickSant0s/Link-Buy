@@ -118,7 +118,7 @@ export default {
 			this.$router.push("/login");
 		},
 		goProfile() {
-			this.$router.push("/Profile");
+			this.$router.push("/profile");
 		},
 		async handleLogout() {
 			await supabase.auth.signOut();
