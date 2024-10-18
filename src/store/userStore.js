@@ -6,7 +6,7 @@ export const userStore = defineStore("user", {
 		const savedUser = localStorage.getItem("user");
 
 		if (!savedUser) {
-			return { token: null, email: null, id: null, username: null };
+			return { token: null, email: null, id: null, username: null , avatarUrl: null};
 		}
 
 		return JSON.parse(savedUser);
@@ -19,6 +19,7 @@ export const userStore = defineStore("user", {
 				token: this.token,
 				id: this.id,
 				username: this.username,
+				avatarUrl: this.avatarUrl
 			};
 		},
 	},
@@ -32,6 +33,7 @@ export const userStore = defineStore("user", {
 			this.token = user.token;
 			this.id = user.id;
 			this.username = user.username;
+			this.avatarUrl = user.avatarUrl
 		},
 		logout() {
 			localStorage.removeItem("token");
@@ -41,6 +43,7 @@ export const userStore = defineStore("user", {
 			this.token = null;
 			this.id = null;
 			this.username = null;
+			this.avatarUrl = null;
 		},
 	},
 });
