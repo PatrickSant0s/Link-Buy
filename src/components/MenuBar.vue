@@ -82,20 +82,15 @@ export default {
 	data() {
 		return {
 			searchQuery: "",
-			avatarUrl: "", // Inicializa o avatarUrl
+			avatarUrl: "",
 		};
 	},
 	async created() {
 		const { data: user } = await supabase.auth.getUser();
 
-		// Tenta carregar a URL do avatar do localStorage
 		const savedUser = JSON.parse(localStorage.getItem("user"));
-		if (savedUser && savedUser.avatarUrl) {
-			this.avatarUrl = savedUser.avatarUrl; // Carrega do localStorage
-		} else if (user && user.user_metadata) {
-			this.avatarUrl = user.user_metadata.avatar_url; // Carrega do Supabase
-		}
-		console.log("Avatar URL:", this.avatarUrl);
+
+		this.avatarUrl = savedUser?.avatarUrl ?? user?.user_metadata?.avatar_url;
 	},
 	computed: {
 		...mapState(userStore, ["user"]),
