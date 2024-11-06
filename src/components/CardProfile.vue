@@ -202,8 +202,6 @@ export default {
 	width: 100vh;
 }
 
-.content-card {
-}
 .icon-profile {
 	position: absolute;
 	top: 24%;
@@ -245,4 +243,9 @@ export default {
 	margin-top: 12px;
 	width: 110px;
 }
+
+::v-deep .v-text-field .v-label {
+  color: #ffd200 !important;
+}
+
 </style>
