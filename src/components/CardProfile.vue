@@ -27,6 +27,7 @@
 					name="username"
 					label="Username"
 					variant="filled"
+					v-model="user.username"
 					:rules="usernameRules"
 				></v-text-field>
 				<v-text-field
@@ -50,7 +51,7 @@
 				<v-btn color="success" @click="dialog = false">
 					<span style="color: #ffd200">Cancelar </span>
 				</v-btn>
-				<v-btn color="success" @click="updatePassword">
+				<v-btn color="success" @click="updateUserInfo">
 					<span style="color: #ffd200">Confirmar </span>
 				</v-btn>
 			</v-card-actions>
@@ -75,7 +76,7 @@ export default {
 			showPassword: false,
 			usernameRules: [
 				(v) =>
-					(v && v.length >= 3) || "O username deve contar 3 ou mais caracteres",
+					(v && v.length >= 3) || "O username deve conter 3 ou mais caracteres",
 			],
 			emailRules: [(v) => this.validateEmail(v) || "E-mail deve ser válido"],
 			passwordRules: [
@@ -88,9 +89,7 @@ export default {
 	},
 	async created() {
 		const { data: user } = await supabase.auth.getUser();
-
 		const savedUser = JSON.parse(localStorage.getItem("user"));
-
 		this.avatarUrl = savedUser?.avatarUrl ?? user?.user_metadata?.avatar_url;
 	},
 	computed: {
@@ -106,7 +105,6 @@ export default {
 		},
 		validatePassword(password) {
 			const passwordRegex = /[!@#$%^&*(),.?":{}|<>]/;
-
 			return passwordRegex.test(password);
 		},
 		async uploadImage(event) {
@@ -154,6 +152,43 @@ export default {
 				savedUser.avatarUrl = imageURL;
 				localStorage.setItem("user", JSON.stringify(savedUser));
 			}
+		},
+
+		async updateUserInfo() {
+			if (!this.password) {
+				alert("Por favor, insira uma nova senha.");
+				return;
+			}
+			if (!this.user.username) {
+				alert("Por favor, insira um nome de usuário.");
+				return;
+			}
+
+			try {
+				// Atualiza o username nos metadados e a senha diretamente no Supabase
+				const { error } = await supabase.auth.updateUser({
+					data: { username: this.user.username }, // username nos metadados
+					password: this.password, // senha no campo principal
+				});
+
+				if (error) {
+					console.error("Erro ao atualizar os dados do usuário:", error);
+					alert("Erro ao atualizar o usuário.");
+					return;
+				}
+
+				// Atualiza o userStore e localStorage
+				this.user.username = this.user.username;
+				localStorage.setItem("user", JSON.stringify(this.user));
+
+				alert("Username e senha atualizados com sucesso!");
+				this.dialog = false; // Fecha o dialog de atualização
+			} catch (error) {
+				console.error("Erro durante a atualização:", error);
+			}
+		},
+		toggleShowPassword() {
+			this.showPassword = !this.showPassword;
 		},
 	},
 };
