@@ -47,15 +47,34 @@
 			<v-divider></v-divider>
 
 			<v-card-actions>
-				<v-spacer></v-spacer>
-				<v-btn color="success" @click="dialog = false">
-					<span style="color: #ffd200">Cancelar </span>
-				</v-btn>
 				<v-btn color="success" @click="updateUserInfo">
 					<span style="color: #ffd200">Confirmar </span>
 				</v-btn>
+				<v-btn color="success" @click="dialog= false">
+					<span style="color: #ffd200">Cancelar</span>
+				</v-btn>
 			</v-card-actions>
 		</v-card>
+		<div class="text-center pa-4">
+			<v-dialog v-model="sucessDialog" width="auto">
+				<v-card max-width="400" class="success-card">
+					<v-card-title class="text-white justify-center"
+						>Concluído</v-card-title
+					>
+					<v-card-text class="text-white">
+						Cadastro atualizado com sucesso
+					</v-card-text>
+					<template v-slot:actions>
+						<v-btn
+							class="ms-auto"
+							color="white"
+							text="Ok"
+							@click="dialog = false"
+						></v-btn>
+					</template>
+				</v-card>
+			</v-dialog>
+		</div>
 	</v-dialog>
 </template>
 
@@ -69,10 +88,11 @@ export default {
 	data() {
 		return {
 			dialog: false,
+			sucessDialog: false,
 			first: "",
 			email: "",
 			password: "",
-			avatarUrl: "", // Inicializa o avatarUrl
+			avatarUrl: "",
 			showPassword: false,
 			usernameRules: [
 				(v) =>
@@ -177,12 +197,11 @@ export default {
 					return;
 				}
 
-				// Atualiza o userStore e localStorage
 				this.user.username = this.user.username;
 				localStorage.setItem("user", JSON.stringify(this.user));
 
-				alert("Username e senha atualizados com sucesso!");
-				this.dialog = false; // Fecha o dialog de atualização
+				this.dialog = false;
+				this.sucessDialog = true;
 			} catch (error) {
 				console.error("Erro durante a atualização:", error);
 			}
@@ -245,7 +264,10 @@ export default {
 }
 
 ::v-deep .v-text-field .v-label {
-  color: #ffd200 !important;
+	color: #ffd200 !important;
 }
 
+.success-card {
+	text-align: center;
+}
 </style>
