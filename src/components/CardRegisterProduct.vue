@@ -56,6 +56,17 @@
 				</div>
 			</v-form>
 		</v-card>
+		<div v-if="userCatalog.length" class="">
+			<h2>Catálogos do Usuário</h2>
+			<ul>
+				<li v-for="item in userCatalog" :key="item.id">
+					{{ item.name }} - {{ item.description }}
+				</li>
+			</ul>
+		</div>
+		<div v-else>
+			<p class="text-center">Nenhum catálogo encontrado para este usuário.</p>
+		</div>
 	</div>
 </template>
 
@@ -73,13 +84,24 @@ export default {
 			description: "",
 			productLink: "",
 			productImageURL: "",
+			userCatalog: [],
 		};
 	},
 	async created() {
-		const { data: user } = await supabase.auth.getUser();
+		const {
+			data: { user },
+			error,
+		} = await supabase.auth.getUser();
+		if (error || !user) {
+			console.error("Usuário não autenticado", error);
+			return;
+		}
 		this.product_image = user.user_metadata?.product_image;
 		console.log("Avatar URL:", this.product_image);
+
+		this.fetchUserCatalog();
 	},
+
 	methods: {
 		async uploadImage(event) {
 			const productFile = event.target.files[0];
@@ -136,6 +158,33 @@ export default {
 		goToHome() {
 			this.$router.push("/");
 		},
+
+		async fetchUserCatalog() {
+			const {
+				data: { user },
+				error,
+			} = await supabase.auth.getUser();
+			if (error || !user) {
+				console.error("Usuário não autenticado", error);
+				return;
+			}
+
+			const userId = user.id;
+
+			const { data: catalog, error: catalogError } = await supabase
+				.from("catalog")
+				.select("*")
+				.eq("user_id", userId);
+
+			if (catalogError) {
+				console.error("Erro ao buscar o catálogo do usuário:", catalogError);
+				return;
+			}
+
+			console.log("Catálogo do usuário:", catalog);
+
+			this.userCatalog = catalog || [];
+		},
 	},
 };
 </script>
@@ -163,4 +212,5 @@ export default {
 	margin-left: 200px;
 	margin-top: 100px;
 }
+
 </style>
