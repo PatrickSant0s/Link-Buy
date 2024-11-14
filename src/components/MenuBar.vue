@@ -53,7 +53,6 @@
 							:style="{ cursor: 'pointer' }"
 						/>
 					</v-avatar>
-					<!-- Aqui você pode adicionar um menu dropdown, se desejar -->
 					<nav class="account-nav">
 						<div class="account-header">
 							<span class="account">Bem-vindo, {{ user.username }}</span>
