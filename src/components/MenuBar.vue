@@ -43,12 +43,16 @@
 				</div>
 
 				<div v-else class="icon-profile">
-					<iconify-icon
-						icon="mdi:account-circle"
-						width="2.5em"
-						height="2.5em"
-					></iconify-icon>
-					<!-- Aqui você pode adicionar um menu dropdown, se desejar -->
+					<v-avatar color="black" size="70" class="mb-3 icon-profile">
+						<img
+							:src="avatarUrl"
+							alt="User Profile"
+							width="100%"
+							height="100%"
+							@click.prevent="goProfile"
+							:style="{ cursor: 'pointer' }"
+						/>
+					</v-avatar>
 					<nav class="account-nav">
 						<div class="account-header">
 							<span class="account">Bem-vindo, {{ user.username }}</span>
@@ -77,7 +81,15 @@ export default {
 	data() {
 		return {
 			searchQuery: "",
+			avatarUrl: "",
 		};
+	},
+	async created() {
+		const { data: user } = await supabase.auth.getUser();
+
+		const savedUser = JSON.parse(localStorage.getItem("user"));
+
+		this.avatarUrl = savedUser?.avatarUrl ?? user?.user_metadata?.avatar_url;
 	},
 	computed: {
 		...mapState(userStore, ["user"]),
@@ -98,6 +110,9 @@ export default {
 		},
 		goLogin() {
 			this.$router.push("/login");
+		},
+		goProfile() {
+			this.$router.push("/profile");
 		},
 		async handleLogout() {
 			await supabase.auth.signOut();
@@ -122,7 +137,7 @@ export default {
 	box-sizing: border-box;
 }
 .account {
-	color: #d1d1d1;
+	color: #ffd200;
 	font-size: 0.875em;
 	font-weight: 500;
 }
@@ -135,6 +150,7 @@ export default {
 	display: flex;
 	flex-direction: column;
 	align-items: start;
+	color: #ffd200;
 }
 
 .account-links {
@@ -146,7 +162,7 @@ export default {
 	font-size: 0.81rem;
 	transition: ease-out 0.2s;
 	line-height: 15px;
-	color: #bdbdbd;
+	color: #ffd200;
 }
 
 .search-text-input {
