@@ -136,15 +136,14 @@ export default {
 				return;
 			}
 
-			const { error } = await supabase.auth.updateUser({
-				data: {
-					product_name: this.productName,
-					product_description: this.description,
-					product_link: this.productLink,
-					product_image: this.productImageURL,
+			const { data, error } = await supabase.from("product").insert([
+				{
+					name: this.productName,
+					description: this.description,
+					Link: this.productLink,
+					img_url: this.productImageURL,
 				},
-			});
-
+			]);
 			if (error) {
 				console.error("Erro ao atualizar o metadata do usuário:", error);
 				return;
@@ -212,5 +211,4 @@ export default {
 	margin-left: 200px;
 	margin-top: 100px;
 }
-
 </style>

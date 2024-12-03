@@ -1,25 +1,23 @@
 <template>
 	<div class="title d-flex justify-center">
 		<v-row class="mt-10">
-			
-			<v-col cols="12" md="4">
+			<!-- Itera sobre os produtos da tabela -->
+			<v-col v-for="product in products" :key="product.id" cols="12" md="4">
 				<v-card
 					class="mx-auto mb-3"
 					max-width="400"
 					height="auto"
 					color="#0d0d0d"
 				>
-					<v-img height="auto" :src="product_image"></v-img>
+					<v-img height="auto" :src="product.img_url"></v-img>
 
 					<div class="d-flex flex-column">
-						<span class="name mx-auto pt-4">{{ product_name }}</span>
-						<span class="sub-title">{{ product_description }}</span>
+						<span class="name mx-auto pt-4">{{ product.name }}</span>
+						<span class="sub-title">{{ product.description }}</span>
 					</div>
 
-					<div class="portion">{{}}</div>
-
 					<div class="pa-5">
-						<button class="custom-button" @click="goToProduct">
+						<button class="custom-button" @click="goToProduct(product.link)">
 							Ver produto
 						</button>
 					</div>
@@ -30,47 +28,36 @@
 </template>
 
 <script>
-import { Icon } from "@iconify/vue";
-import { uuid } from "vue-uuid";
 import { supabase } from "@/config/supabase";
-
 
 export default {
 	data() {
 		return {
-			product_image: "",
-			product_name: "",
-			product_description: "",
-			product_link: "",
+			products: []
 		};
 	},
 	async created() {
 		try {
-			const {
-				data: { user },
-				error,
-			} = await supabase.auth.getUser();
-			if (error || !user) {
-				console.error("Não foi possível obter os dados do usuário.");
+			// Busca os produtos da tabela "product"
+			const { data, error } = await supabase.from("product").select("*");
+
+			if (error) {
+				console.error("Erro ao buscar produtos do Supabase:", error);
 				return;
 			}
-			console.log("User Metadata:", user.user_metadata);
 
-			this.product_image = user.user_metadata?.product_image || "";
-			this.product_name = user.user_metadata?.product_name || "";
-			this.product_description = user.user_metadata?.product_description || "";
-			this;
-			this.product_link = user.user_metadata?.product_link || "";
+			this.products = data || [];
+			console.log("Produtos carregados:", this.products);
 		} catch (err) {
-			console.error("Erro ao obter dados do usuário:", err);
+			console.error("Erro ao buscar produtos:", err);
 		}
 	},
 	methods: {
-		goToProduct() {
-			if (this.product_link) {
-				window.open(this.product_link, "_blank", "noopener,noreferrer");
+		goToProduct(link) {
+			if (link) {
+				window.open(link, "_blank", "noopener,noreferrer");
 			} else {
-				console.error("Link do produto não disponível ");
+				console.error("Link do produto não disponível.");
 			}
 		},
 	},
