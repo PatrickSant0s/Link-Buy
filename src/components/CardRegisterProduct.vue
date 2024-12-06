@@ -140,7 +140,7 @@ export default {
 				{
 					name: this.productName,
 					description: this.description,
-					Link: this.productLink,
+					link: this.productLink,
 					img_url: this.productImageURL,
 				},
 			]);
