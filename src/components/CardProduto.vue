@@ -1,32 +1,23 @@
 <template>
 	<div class="title d-flex justify-center">
 		<v-row class="mt-10">
-			<v-col
-				v-for="(produto, index) in produtos"
-				:key="produto.id"
-				cols="12"
-				md="4"
-			>
+			<!-- Itera sobre os produtos da tabela -->
+			<v-col v-for="product in products" :key="product.id" cols="12" md="4">
 				<v-card
 					class="mx-auto mb-3"
 					max-width="400"
 					height="auto"
 					color="#0d0d0d"
-					style=""
 				>
-					<v-img height="auto" :src="produto.imagem"></v-img>
+					<v-img height="auto" :src="product.img_url"></v-img>
 
 					<div class="d-flex flex-column">
-						<span class="name mx-auto pt-4">{{ produto.nome }}</span>
-						<span class="sub-title">{{ produto.preco }}</span>
-					</div>
-
-					<div class="portion">
-						{{ produto.portions }}
+						<span class="name mx-auto pt-4">{{ product.name }}</span>
+						<span class="sub-title">{{ product.description }}</span>
 					</div>
 
 					<div class="pa-5">
-						<button class="custom-button" @click="irParaPerfil(produto.id)">
+						<button class="custom-button" @click="goToProduct(product.link)">
 							Ver produto
 						</button>
 					</div>
@@ -37,19 +28,36 @@
 </template>
 
 <script>
-import { produtos } from "@/utils/CardContext";
-import { Icon } from "@iconify/vue";
+import { supabase } from "@/config/supabase";
+
 export default {
 	data() {
 		return {
-			produtos: produtos,
+			products: []
 		};
 	},
+	async created() {
+		try {
+			// Busca os produtos da tabela "product"
+			const { data, error } = await supabase.from("product").select("*");
+
+			if (error) {
+				console.error("Erro ao buscar produtos do Supabase:", error);
+				return;
+			}
+
+			this.products = data || [];
+			console.log("Produtos carregados:", this.products);
+		} catch (err) {
+			console.error("Erro ao buscar produtos:", err);
+		}
+	},
 	methods: {
-		irParaPerfil(id) {
-			const routeName = this.$route.name;
-			if (routeName !== "PerfilProduct" || this.$route.params.id !== id) {
-				this.$router.push(`/Produto/${id}`);
+		goToProduct(link) {
+			if (link) {
+				window.open(link, "_blank", "noopener,noreferrer");
+			} else {
+				console.error("Link do produto não disponível.");
 			}
 		},
 	},
@@ -92,6 +100,10 @@ export default {
 	color: #000000;
 	background-color: #ffd200;
 	transition: ease-out 0.2s;
+}
+
+.button-register {
+	align-content: center;
 }
 .name {
 	color: #ebebeb;

@@ -4,6 +4,7 @@ import LoginView from "@/views/LoginView.vue";
 import RegisterView from "@/views/RegisterView.vue";
 import PerfilProduct from "@/components/PerfilProduct.vue";
 import { isUserLoggedIn } from "@/utils/authentication";
+import ProductRegisterView from "@/views/ProductRegisterView.vue";
 import ProfileView from "@/views/ProfileView.vue";
 
 const routes = [
@@ -24,10 +25,16 @@ const routes = [
 		component: RegisterView,
 	},
 	{
+		path: "/registerProduct",
+		name: "registerProduct",
+		component: ProductRegisterView,
+	},
+	{
 		path: "/profile",
 		name: "profile",
 		component: ProfileView,
 	},
+
 	{
 		path: "/Produto/:id",
 		name: "PerfilProduct",
