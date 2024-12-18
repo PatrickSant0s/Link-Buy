@@ -1,19 +1,19 @@
 <template>
 	<div style="background-color: #141414; width: 100%">
 		<MenuBar />
-		<button class="button-register" @click="goRegisterProduct">Criar Produto</button>
+	<button class="button-register" @click="goRegisterProduct">Criar Categoria</button> 
 		<div class="d-flex justify-center">
 			<div class="content">
 				<h1 class="title">Lançamentos</h1>
 
-				<CardProduto />
 			</div>
+
+			
 		</div>
-		<h1 class="title">Eventos</h1>
-		<CarrouselEventos />
+		
 		<div>
-			<Footer />
-		</div>
+			<cardCategories></cardCategories>
+		</div> 
 	</div>
 </template>
 
@@ -24,6 +24,7 @@ import FilterProduct from "@/components/FilterProduct.vue";
 import CarrouselEventos from "@/components/CarrouselEventos.vue";
 import Footer from "@/components/Footer.vue";
 import CardRegisterProduct from "@/components/CardRegisterProduct.vue";
+import CardCategories from "@/components/CardCategories.vue";
 
 export default {
 	name: "HomeView",
@@ -33,11 +34,12 @@ export default {
 		FilterProduct,
 		CarrouselEventos,
 		CardRegisterProduct,
+		CardCategories,
 		Footer,
 	},
 	methods: {
 		goRegisterProduct() {
-			this.$router.push("/registerProduct");
+			this.$router.push("/registerCategories");
 		},
 	},
 };
@@ -52,7 +54,7 @@ export default {
 .button-register {
 	position: absolute;
 	right: 20%;
-	top: 17%;
+	top: 25%;
 	width: 8%;
 	height: 100px;
 	display: flex;
