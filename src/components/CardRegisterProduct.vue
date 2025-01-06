@@ -60,7 +60,7 @@
 </template>
 
 <script>
-import { uuid } from "vue-uuid";
+
 import { Icon } from "@iconify/vue";
 import { supabase } from "@/config/supabase";
 

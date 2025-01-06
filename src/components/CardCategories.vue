@@ -4,12 +4,40 @@
 		<v-row class="mt-10">
 			<v-col v-for="category in categories" :key="category.id" cols="12" md="4">
 				<v-card
-					class="mx-auto mb-3"
+					class="mx-auto mb-3 position-relative"
 					max-width="400"
 					height="auto"
 					color="#0d0d0d"
 				>
 					<v-img height="auto" :src="category.image_url" alt="Category Image" />
+
+					<!-- Botão de exclusão com tooltip -->
+					<v-tooltip bottom>
+						<template v-slot:activator="{ on, attrs }">
+							<div
+								class="delete-button"
+								style="position: absolute; top: 10px; right: 10px; z-index: 10"
+								v-bind="attrs"
+								v-on="on"
+							>
+								<icon
+									icon="mdi:pencil"
+									width="1.5em"
+									height="1.5em"
+									class="delete-icon"
+									@click="editProduct(product)"
+								></icon>
+								<icon
+									icon="mdi:delete"
+									width="1.5em"
+									height="1.5em"
+									class="delete-icon"
+									@click="deleteProduct(category.id)"
+								></icon>
+							</div>
+						</template>
+						<span>Excluir Catálogo</span>
+					</v-tooltip>
 
 					<div class="d-flex flex-column">
 						<span class="name mx-auto pt-4">{{ category.name }}</span>
@@ -28,9 +56,13 @@
 	<!-- </div> -->
 </template>
 <script>
+import { Icon } from "@iconify/vue";
+
 import { supabase } from "@/config/supabase";
 
 export default {
+	name: "",
+	components: { Icon },
 	data() {
 		return {
 			categories: [],
@@ -54,7 +86,6 @@ export default {
 				this.categories = data;
 			}
 		},
-		
 	},
 };
 </script>
@@ -123,5 +154,16 @@ export default {
 	font-weight: 700;
 	color: #ffd200;
 	margin: auto;
+}
+
+.delete-icon {
+	color: black;
+	cursor: pointer;
+	transition: color 0.3s ease; /* Transição suave */
+}
+
+/* Cor vermelha no hover */
+.delete-icon:hover {
+	color: red;
 }
 </style>

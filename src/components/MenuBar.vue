@@ -2,8 +2,7 @@
 	<div class="container">
 		<div class="menu-bar">
 			<img
-				src="https://mir-s3-cdn-cf.behance.net/projects/404/db2257135246647.Y3JvcCwxMjc5LDEwMDAsMCwxMzk.png"
-				alt="Emblema de FutVôlei"
+				src="https://imagedelivery.net/LqiWLm-3MGbYHtFuUbcBtA/38cb22c4-4246-46f0-693f-b284c43ddd00/public"
 				width="220px"
 				@click="goToHome"
 				style="cursor: pointer"

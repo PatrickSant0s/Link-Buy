@@ -66,22 +66,29 @@ export default {
 		};
 	},
 	methods: {
-		// Criar nova categoria
 		async createCategory() {
+			const {
+				data: { user },
+				error: userError,
+			} = await supabase.auth.getUser();
+
+			const categoryData = {
+				...this.newCategory,
+				user_id: user.id,
+			};
 			const { data, error } = await supabase
 				.from("categories")
-				.insert([this.newCategory]);
+				.insert([categoryData])
+				.select();
 
-			// Verificar se ocorreu um erro na inserção
 			if (error) {
 				console.error("Erro ao criar categoria:", error.message);
-				return; // Se houver erro, interrompe a execução
+				return;
 			}
 
-			// Verificar se a resposta contém dados e se o array data não está vazio
 			if (data && data.length > 0) {
-				this.$emit("category-added", data[0]); // Emitir evento para atualizar lista externa
-				this.newCategory = { name: "", description: "", image_url: "" }; // Limpa o formulário
+				this.$emit("category-added", data[0]);
+				this.newCategory = { name: "", description: "", image_url: "" };
 			} else {
 				console.error("Nenhuma categoria foi criada. Dados retornados:", data);
 			}

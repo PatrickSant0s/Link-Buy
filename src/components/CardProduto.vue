@@ -21,6 +21,15 @@
 							Ver produto
 						</button>
 					</div>
+					<div>
+						<icon
+							icon="flowbite:edit-solid"
+							
+
+						
+							cursor="pointer"
+						></icon>
+					</div>
 				</v-card>
 			</v-col>
 		</v-row>
@@ -29,11 +38,13 @@
 
 <script>
 import { supabase } from "@/config/supabase";
+import { Icon } from '@iconify/vue';
 
 export default {
+	components: { Icon },
 	data() {
 		return {
-			products: []
+			products: [],
 		};
 	},
 	async created() {
