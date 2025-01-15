@@ -89,6 +89,8 @@ export default {
 			if (data && data.length > 0) {
 				this.$emit("category-added", data[0]);
 				this.newCategory = { name: "", description: "", image_url: "" };
+				alert("Categoria criada com sucesso");
+				this.goToHome();
 			} else {
 				console.error("Nenhuma categoria foi criada. Dados retornados:", data);
 			}
