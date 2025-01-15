@@ -32,7 +32,7 @@
 									width="1.5em"
 									height="1.5em"
 									class="delete-icon"
-									@click="deleteProduct(category.id)"
+									@click="deleteCategory(category.id)"
 								></icon>
 							</div>
 						</template>
@@ -84,6 +84,39 @@ export default {
 				console.error("Erro ao buscar categorias:", error.message);
 			} else {
 				this.categories = data;
+			}
+		},
+		// deletando categorias
+		async deleteCategory(categoryId) {
+			// Confirmação do usuário
+			const confirmDelete = confirm(
+				"Tem certeza que deseja excluir esta categoria?",
+			);
+			if (!confirmDelete) return;
+
+			try {
+				// Exclusão no Supabase
+				const { error } = await supabase
+					.from("categories")
+					.delete()
+					.eq("id", categoryId);
+				if (error) {
+					console.error("Erro ao excluir categoria:", error.message);
+					alert("Não foi possível excluir a categoria.");
+					return;
+				}
+
+				// Atualização local: mantém apenas as categorias cujo id seja diferente de categoryId
+				this.categories = this.categories.filter((category) => {
+					console.log("Comparando:", category.id, "com", categoryId); // Para depuração
+					return category.id !== categoryId;
+				});
+
+				// Feedback para o usuário
+				alert("Categoria excluída com sucesso!");
+			} catch (err) {
+				console.error("Erro inesperado:", err);
+				alert("Ocorreu um erro inesperado.");
 			}
 		},
 	},
