@@ -1,19 +1,18 @@
 <template>
 	<div style="background-color: #141414; width: 100%">
 		<MenuBar />
-	<button class="button-register" @click="goRegisterProduct">Criar Categoria</button> 
+		<button class="button-register" @click="goRegisterProduct">
+			Criar Categoria
+		</button>
 		<div class="d-flex justify-center">
 			<div class="content">
 				<h1 class="title">Lançamentos</h1>
-
 			</div>
-
-			
 		</div>
-		
+
 		<div>
 			<cardCategories></cardCategories>
-		</div> 
+		</div>
 	</div>
 </template>
 

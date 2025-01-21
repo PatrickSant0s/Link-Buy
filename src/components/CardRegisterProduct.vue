@@ -47,6 +47,7 @@
 					<label for="fileInput" class="custom-file-label"
 						>Imagem do Produto</label
 					>
+
 				</div>
 
 				<div class="pa-5">

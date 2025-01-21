@@ -10,6 +10,12 @@ import CategoriesRegisterView from "@/views/CategoriesRegisterView.vue";
 
 const routes = [
 	{
+		path: "/categories/:categoryId",
+		name: "categoryView",
+		component: () => import("@/views/CategoryView.vue"),
+		meta: { requiresAuth: true },
+	},
+	{
 		path: "/",
 		name: "home",
 		component: HomeView,
