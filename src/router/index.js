@@ -6,8 +6,15 @@ import PerfilProduct from "@/components/PerfilProduct.vue";
 import { isUserLoggedIn } from "@/utils/authentication";
 import ProductRegisterView from "@/views/ProductRegisterView.vue";
 import ProfileView from "@/views/ProfileView.vue";
+import CategoriesRegisterView from "@/views/CategoriesRegisterView.vue";
 
 const routes = [
+	{
+		path: "/categories/:categoryId",
+		name: "categoryView",
+		component: () => import("@/views/CategoryView.vue"),
+		meta: { requiresAuth: true },
+	},
 	{
 		path: "/",
 		name: "home",
@@ -28,6 +35,11 @@ const routes = [
 		path: "/registerProduct",
 		name: "registerProduct",
 		component: ProductRegisterView,
+	},
+	{
+		path: "/registerCategories",
+		name: "registerCategories",
+		component: CategoriesRegisterView,
 	},
 	{
 		path: "/profile",

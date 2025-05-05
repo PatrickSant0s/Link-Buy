@@ -47,6 +47,7 @@
 					<label for="fileInput" class="custom-file-label"
 						>Imagem do Produto</label
 					>
+
 				</div>
 
 				<div class="pa-5">
@@ -56,22 +57,11 @@
 				</div>
 			</v-form>
 		</v-card>
-		<div v-if="userCatalog.length" class="">
-			<h2>Catálogos do Usuário</h2>
-			<ul>
-				<li v-for="item in userCatalog" :key="item.id">
-					{{ item.name }} - {{ item.description }}
-				</li>
-			</ul>
-		</div>
-		<div v-else>
-			<p class="text-center">Nenhum catálogo encontrado para este usuário.</p>
-		</div>
 	</div>
 </template>
 
 <script>
-import { uuid } from "vue-uuid";
+
 import { Icon } from "@iconify/vue";
 import { supabase } from "@/config/supabase";
 
