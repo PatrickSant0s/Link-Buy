@@ -47,7 +47,6 @@
 					<label for="fileInput" class="custom-file-label"
 						>Imagem do Produto</label
 					>
-
 				</div>
 
 				<div class="pa-5">
@@ -61,9 +60,9 @@
 </template>
 
 <script>
-
 import { Icon } from "@iconify/vue";
 import { supabase } from "@/config/supabase";
+import { uuid } from "vue-uuid";
 
 export default {
 	name: "CardRegisterProduct",
@@ -126,24 +125,34 @@ export default {
 				return;
 			}
 
+			const { data: userData, error: userError } =
+				await supabase.auth.getUser();
+
+			if (userError || !userData || !userData.user) {
+				console.error("Erro ao obter usuário autenticado:", userError);
+				return;
+			}
+
+			const userId = userData.user.id;
+
 			const { data, error } = await supabase.from("product").insert([
 				{
 					name: this.productName,
 					description: this.description,
 					link: this.productLink,
 					img_url: this.productImageURL,
+					user_id: userId, // vincula ao usuário
 				},
 			]);
+
 			if (error) {
-				console.error("Erro ao atualizar o metadata do usuário:", error);
+				console.error("Erro ao cadastrar produto:", error);
 				return;
 			}
 
 			console.log("Produto cadastrado com sucesso!");
-
 			this.goToHome();
 		},
-
 		goToHome() {
 			this.$router.push("/");
 		},
@@ -163,7 +172,7 @@ export default {
 			const { data: catalog, error: catalogError } = await supabase
 				.from("catalog")
 				.select("*")
-				.eq("user_id", userId);
+				.eq("user_id", user.id);
 
 			if (catalogError) {
 				console.error("Erro ao buscar o catálogo do usuário:", catalogError);

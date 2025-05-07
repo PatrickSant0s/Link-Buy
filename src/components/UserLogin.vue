@@ -13,7 +13,6 @@
 					label="Email"
 					variant="filled"
 					:rules="emailRules"
-					
 				></v-text-field>
 
 				<v-text-field
@@ -23,7 +22,7 @@
 					color="primary"
 					label="Senha"
 					placeholder="Digite sua senha"
-						variant="filled"
+					variant="filled"
 					:append-icon="showPassword ? 'mdi-eye-off' : 'mdi-eye'"
 					:rules="passwordRules"
 					@click:append="toggleShowPassword"
@@ -44,20 +43,16 @@
 				</v-card-actions>
 			</v-form>
 		</v-card>
-		<!-- <Footer /> -->
 	</div>
 </template>
 
 <script>
-import Footer from "./Footer.vue";
 import { supabase } from "@/config/supabase";
 import { userStore } from "@/store/userStore";
 import { mapActions, mapState } from "pinia";
+
 export default {
 	name: "UserLogin",
-	components: {
-		Footer,
-	},
 	data() {
 		return {
 			email: "",
@@ -70,7 +65,7 @@ export default {
 			],
 			passwordRules: [
 				(v) => Boolean(v) || "A senha é obrigatória",
-				(v) => v.length >= 6 || "A senha deve ter pelo menos 3 caracteres",
+				(v) => v.length >= 6 || "A senha deve ter pelo menos 6 caracteres",
 				(v) =>
 					this.validatePassword(v) ||
 					"A senha deve conter um caractere especial",
@@ -89,7 +84,7 @@ export default {
 			const { valid } = await this.$refs.form.validate();
 
 			if (!valid) {
-				alert("Por favor, preencha ambos os campos corretamente.");
+				alert("Por favor, preencha os campos corretamente.");
 				return;
 			}
 
@@ -100,8 +95,10 @@ export default {
 				password: this.password,
 			});
 
-			if (error) {
-				alert("Usuário não encontrado, verique a senha ou cadastra-se");
+			console.log("LOGIN RESPONSE:", { data, error });
+
+			if (error || !data.session) {
+				alert("Usuário não encontrado, verifique a senha ou cadastre-se.");
 				this.loading = false;
 				return;
 			}
@@ -110,9 +107,10 @@ export default {
 				email: this.email,
 				token: data.session.access_token,
 				id: data.user.id,
-				username: data.user.user_metadata.username,
+				username: data.user.user_metadata?.username || "",
 			});
 
+			this.loading = false;
 			this.$router.push("/");
 		},
 		validateEmail(email) {
@@ -129,26 +127,6 @@ export default {
 </script>
 
 <style scoped>
-.success-alert {
-	/* Estilos para o alerta de sucesso */
-	position: absolute;
-	top: 7%;
-	left: 723px;
-	width: 20%;
-	background-color: #d4edda;
-	border-color: #c3e6cb;
-	color: #155724;
-	padding: 0.75rem 1.25rem;
-	margin-bottom: 1rem;
-	border: 1px solid transparent;
-	border-radius: 0.25rem;
-}
-
-.v-application .rounded {
-	border-radius: 4px !important;
-	background-color: transparent;
-}
-
 .v-card-item .v-card-title {
 	padding: 0;
 	color: #ebebeb;
@@ -169,13 +147,8 @@ export default {
 .custom-button {
 	color: #f5f5f5;
 }
-
 .custom-scope ::before,
 .custom-scope ::after {
 	color: #ebebeb;
-}
-
-.custom-scope[data-v-3a5d5944] * {
-	text-align: center;
 }
 </style>

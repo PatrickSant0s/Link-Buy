@@ -36,7 +36,7 @@
 					:type="showPassword ? 'text' : 'password'"
 					color="primary"
 					label="Senha"
-					placeholder="Enter your password"
+					placeholder="Digite sua senha"
 					variant="filled"
 					:append-icon="showPassword ? 'mdi-eye-off' : 'mdi-eye'"
 					:rules="passwordRules"
@@ -50,11 +50,13 @@
 				<v-btn color="success" @click="updateUserInfo">
 					<span style="color: #ffd200">Confirmar </span>
 				</v-btn>
-				<v-btn color="success" @click="dialog= false">
+				<v-btn color="success" @click="dialog = false">
 					<span style="color: #ffd200">Cancelar</span>
 				</v-btn>
 			</v-card-actions>
 		</v-card>
+
+		<!-- Sucesso -->
 		<div class="text-center pa-4">
 			<v-dialog v-model="sucessDialog" width="auto">
 				<v-card max-width="400" class="success-card">
@@ -69,7 +71,7 @@
 							class="ms-auto"
 							color="white"
 							text="Ok"
-							@click="dialog = false"
+							@click="sucessDialog = false"
 						></v-btn>
 					</template>
 				</v-card>
@@ -89,8 +91,6 @@ export default {
 		return {
 			dialog: false,
 			sucessDialog: false,
-			first: "",
-			email: "",
 			password: "",
 			avatarUrl: "",
 			showPassword: false,
@@ -98,7 +98,6 @@ export default {
 				(v) =>
 					(v && v.length >= 3) || "O username deve conter 3 ou mais caracteres",
 			],
-			emailRules: [(v) => this.validateEmail(v) || "E-mail deve ser válido"],
 			passwordRules: [
 				(v) => v.length >= 6 || "A senha deve ter pelo menos 6 caracteres",
 				(v) =>
@@ -119,10 +118,6 @@ export default {
 		goToHome() {
 			this.$router.push("/");
 		},
-		validateEmail(email) {
-			const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-			return emailRegex.test(email);
-		},
 		validatePassword(password) {
 			const passwordRegex = /[!@#$%^&*(),.?":{}|<>]/;
 			return passwordRegex.test(password);
@@ -141,69 +136,60 @@ export default {
 				return;
 			}
 
-			console.log("Imagem enviada com sucesso:", data);
-
 			const { data: avatar_url } = supabase.storage
 				.from("user-profile-image")
 				.getPublicUrl(filePath, {});
 			await this.updateImage(avatar_url.publicUrl);
-			console.log(avatar_url);
 		},
 		async updateImage(imageURL) {
-			// Atualiza a imagem do usuário no Supabase
 			const { error } = await supabase.auth.updateUser({
 				data: {
 					avatar_url: imageURL,
 				},
 			});
 			if (error) {
-				console.error("Erro ao atualizar o usuário:", error);
+				console.error("Erro ao atualizar o avatar:", error);
 				return;
 			}
 
-			console.log("Imagem do perfil atualizada com sucesso");
-
-			// Atualiza o avatar no Pinia store
 			this.avatarUrl = imageURL;
 
-			// Atualiza o usuário salvo no localStorage
 			const savedUser = JSON.parse(localStorage.getItem("user"));
 			if (savedUser) {
 				savedUser.avatarUrl = imageURL;
 				localStorage.setItem("user", JSON.stringify(savedUser));
 			}
 		},
-
 		async updateUserInfo() {
-			if (!this.password) {
-				alert("Por favor, insira uma nova senha.");
-				return;
-			}
-			if (!this.user.username) {
-				alert("Por favor, insira um nome de usuário.");
+			if (!this.password || !this.user.username) {
+				alert("Preencha todos os campos.");
 				return;
 			}
 
 			try {
-				// Atualiza o username nos metadados e a senha diretamente no Supabase
 				const { error } = await supabase.auth.updateUser({
-					data: { username: this.user.username }, // username nos metadados
-					password: this.password, // senha no campo principal
+					password: this.password,
+					data: {
+						username: this.user.username,
+					},
 				});
 
 				if (error) {
-					console.error("Erro ao atualizar os dados do usuário:", error);
-					alert("Erro ao atualizar o usuário.");
+					console.error("Erro ao atualizar o usuário:", error);
+					alert("Erro ao atualizar as informações do usuário");
 					return;
 				}
 
-				this.user.username = this.user.username;
+				// Atualiza o localStorage com os dados do usuário
 				localStorage.setItem("user", JSON.stringify(this.user));
 
+				// Fechar o modal de atualização
 				this.dialog = false;
+
+				// Exibir o modal de sucesso
 				this.sucessDialog = true;
 			} catch (error) {
-				console.error("Erro durante a atualização:", error);
+				console.error("Erro inesperado:", error);
 			}
 		},
 		toggleShowPassword() {

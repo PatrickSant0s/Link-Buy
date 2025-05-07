@@ -22,13 +22,6 @@
 			</div> -->
 			<div style="display: flex">
 				<div v-if="!isLoggedIn">
-					<div class="icon-log">
-						<iconify-icon
-							icon="mi:log-in"
-							width="2.5em"
-							height="2.5em"
-						></iconify-icon>
-					</div>
 					<nav class="account-nav">
 						<div class="account-header">
 							<span class="account">Acesse sua conta</span>

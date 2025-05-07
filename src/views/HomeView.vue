@@ -1,9 +1,10 @@
 <template>
+	<button class="button-register" @click="goRegisterProduct">
+		Criar product
+	</button>
 	<div style="background-color: #141414; width: 100%">
 		<MenuBar />
-		<button class="button-register" @click="goRegisterProduct">
-			Criar Categoria
-		</button>
+
 		<div class="d-flex justify-center">
 			<div class="content">
 				<h1 class="title">Lançamentos</h1>
@@ -11,7 +12,7 @@
 		</div>
 
 		<div>
-			<cardCategories></cardCategories>
+			<CardProduto></CardProduto>
 		</div>
 	</div>
 </template>
@@ -38,7 +39,7 @@ export default {
 	},
 	methods: {
 		goRegisterProduct() {
-			this.$router.push("/registerCategories");
+			this.$router.push("/registerProduct");
 		},
 	},
 };
@@ -51,15 +52,13 @@ export default {
 }
 
 .button-register {
+	font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
 	position: absolute;
 	right: 20%;
-	top: 25%;
-	width: 8%;
-	height: 100px;
-	display: flex;
-	justify-content: center;
+	top: 18%;
+	width: 10%;
 	align-items: center;
-	height: 40px;
+	height: 50px;
 	font-size: 0.75rem;
 	font-weight: 700;
 	border-radius: 3px;
