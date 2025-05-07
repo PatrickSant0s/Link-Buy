@@ -2,7 +2,7 @@
 	<div class="container">
 		<div class="menu-bar">
 			<img
-				src="https://imagedelivery.net/LqiWLm-3MGbYHtFuUbcBtA/38cb22c4-4246-46f0-693f-b284c43ddd00/public"
+				src="https://static.vecteezy.com/ti/vetor-gratis/p1/5466542-m-logo-letra-icone-monograma-m-letra-design-com-linha-branca-monograma-e-visual-minimalista-moderno-criativo-vetor.jpg"
 				width="220px"
 				@click="goToHome"
 				style="cursor: pointer"
