@@ -57,7 +57,7 @@ npm install
 
 
 
-📚 Aprendizados
+## 📚 Aprendizados
 Durante o desenvolvimento do Link Buy, foram aprimoradas diversas habilidades, como:
 
 Integração com backend como serviço (BaaS)
@@ -68,10 +68,10 @@ Boas práticas com Vue 3 e componentes reutilizáveis
 
 Otimização da responsividade e performance com Vite e Vuetify
 
-💻 Autor
+## 💻 Autor
 Desenvolvido por Patrick (Pk) — Fullstack Developer
 
-📌 Status do Projeto
+## 📌 Status do Projeto
 🔧 Em andamento — novas funcionalidades estão sendo implementadas, como sistema de categorias e filtros de busca.
 
 ![linkk buy](https://github.com/user-attachments/assets/049b85cc-0087-46d7-9217-28607d8f361b)
