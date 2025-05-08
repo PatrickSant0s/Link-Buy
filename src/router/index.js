@@ -47,11 +47,6 @@ const routes = [
 		component: ProfileView,
 	},
 
-	{
-		path: "/Produto/:id",
-		name: "PerfilProduct",
-		component: PerfilProduct,
-	},
 ];
 
 const router = createRouter({

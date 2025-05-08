@@ -151,7 +151,14 @@ export default {
 			});
 
 			if (error) {
-				alert("Erro: " + error.message);
+				if (
+					error.message.includes("already registered") ||
+					error.status === 400
+				) {
+					alert("Este e-mail já está cadastrado.");
+				} else {
+					alert("Erro ao registrar usuário: " + error.message);
+				}
 				return;
 			}
 
