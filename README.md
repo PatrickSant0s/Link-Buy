@@ -74,4 +74,6 @@ Desenvolvido por Patrick (Pk) — Fullstack Developer
 📌 Status do Projeto
 🔧 Em andamento — novas funcionalidades estão sendo implementadas, como sistema de categorias e filtros de busca.
 
+![linkk buy](https://github.com/user-attachments/assets/049b85cc-0087-46d7-9217-28607d8f361b)
+![link](https://github.com/user-attachments/assets/d5eb3424-bd9b-4a46-b509-8e571f275d59)
 
