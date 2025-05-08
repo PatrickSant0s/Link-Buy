@@ -27,3 +27,51 @@
 A aplicação conta com um design responsivo que se adapta a diferentes dispositivos. Utiliza Vuetify para garantir uma UI moderna e elegante.
 
 ## 📂 Estrutura do Projeto
+
+src/
+├── assets/ # Arquivos estáticos (imagens, ícones, etc.)
+├── components/ # Componentes reutilizáveis da aplicação
+├── views/ # Páginas principais da aplicação
+├── router/ # Arquivos de rotas (Vue Router)
+├── store/ # Pinia stores (usuários, produtos, etc.)
+├── plugins/ # Configurações de plugins (Vuetify, fonts)
+└── App.vue # Componente raiz
+
+
+
+
+## ✅ Instalação
+
+1. Clone o repositório:
+
+git clone https://github.com/seu-usuario/link-buy.git´´
+
+
+
+2. Instale as dependências::
+cd link-buy
+npm install
+
+3. Rode o projeto localmente:
+  npm run serve
+
+
+
+📚 Aprendizados
+Durante o desenvolvimento do Link Buy, foram aprimoradas diversas habilidades, como:
+
+Integração com backend como serviço (BaaS)
+
+Uso avançado do Pinia para gerenciamento de estado
+
+Boas práticas com Vue 3 e componentes reutilizáveis
+
+Otimização da responsividade e performance com Vite e Vuetify
+
+💻 Autor
+Desenvolvido por Patrick (Pk) — Fullstack Developer
+
+📌 Status do Projeto
+🔧 Em andamento — novas funcionalidades estão sendo implementadas, como sistema de categorias e filtros de busca.
+
+
